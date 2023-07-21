@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fecf8f99-8a52-4c57-9dbc-eded9a5dead4"
+      }
+    },
+    "owner": "timciep"
   }
 }
