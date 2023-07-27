@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "941837202432",
+    "project_id": "jot-zone",
+    "storage_bucket": "jot-zone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941837202432:android:776c4c2cb03e484d99d4e5",
+        "android_client_info": {
+          "package_name": "zone.jot.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941837202432-arf0kqmm5q8bgui5p7rvhcsnmut0v82l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "***REMOVED***"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941837202432-arf0kqmm5q8bgui5p7rvhcsnmut0v82l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

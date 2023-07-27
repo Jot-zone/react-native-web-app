@@ -15,13 +15,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "zone.jot.app",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "zone.jot.app",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +35,11 @@
         "projectId": "fecf8f99-8a52-4c57-9dbc-eded9a5dead4"
       }
     },
-    "owner": "timciep"
-  }
+    "owner": "timciep",
+    "plugins": [
+        "expo-build-properties",
+        "@react-native-firebase/app"
+    ]
+  },
+  "scheme": "jot-zone"
 }
