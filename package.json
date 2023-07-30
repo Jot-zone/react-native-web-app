@@ -5,6 +5,7 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "pod-ios": "cd ios && pod install && cd ..",
     "web": "expo start --web",
     "eas-android": "eas build --profile development --platform android",
     "eas-ios": "eas build --profile development-simulator --platform ios"
@@ -28,16 +29,20 @@
     "expo-status-bar": "~1.4.4",
     "expo-web-browser": "~12.1.1",
     "firebase": "^10.1.0",
+    "moment": "^2.29.4",
     "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
+    "react-native-cn-quill": "^0.7.18",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
-    "react-native-web": "~0.18.10"
+    "react-native-web": "~0.18.10",
+    "react-native-webview": "^11.26.1",
+    "react-quill": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

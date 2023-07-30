@@ -1,7 +1,6 @@
 import { Box, HStack, IconButton, Icon, Text, Menu, Pressable, HamburgerIcon, Button, Avatar } from "native-base";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/auth";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AuthContext } from "../contexts/auth";
 
 export default function MenuBar({ navigation }) {
     const { firebaseUser, logOut } = useContext(AuthContext);

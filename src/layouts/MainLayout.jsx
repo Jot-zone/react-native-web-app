@@ -1,11 +1,9 @@
 import { Box } from 'native-base';
-import MenuBar from '../components/core/MenuBar';
+import MenuBar from '../components/MenuBar';
 
 export default function MainLayout({ children }) {
     return (
-        <Box m="5">
-            {/* <MenuBar /> */}
-
+        <Box p="5" backgroundColor="white">
             {children}
         </Box>
     )

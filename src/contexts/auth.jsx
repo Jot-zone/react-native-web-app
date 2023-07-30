@@ -1,13 +1,16 @@
 import { onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import * as Google from "expo-auth-session/providers/google";
 import { createContext, useState, useEffect } from "react";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { Platform } from 'react-native';
+import { doc } from "firebase/firestore"; 
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [firebaseUser, setFirebaseUser] = useState(null);
+    const [dbUserRef, setDbUserRef] = useState(null);
+    const [userInitialized, setUserInitialized] = useState(false);
 
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
         iosClientId: "100669544122-kibcv4shqhqjvliboltg4457dctksvcs.apps.googleusercontent.com",
@@ -23,16 +26,29 @@ export const AuthProvider = ({ children }) => {
         }
       }, [response]);
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log(user);
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/auth.user
-            setFirebaseUser(user);
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                initializeFirebaseUser(user);
+            } else {
+                // console.log('no user');
+            }
+        });
+    }, []);
+
+    const initializeFirebaseUser = (firebaseUser) => {
+        setFirebaseUser(firebaseUser);
+
+        if (firebaseUser) {
+            setDbUserRef(doc(db, "users", firebaseUser.uid));
         } else {
-            console.log('no user');
+            setDbUserRef(null);
         }
-    });
+
+        setUserInitialized(true);
+    }
 
     const googleSignInWithPopup = async () => {
         const provider = new GoogleAuthProvider();
@@ -42,19 +58,6 @@ export const AuthProvider = ({ children }) => {
                 auth, 
                 provider
             );
-
-            // const result = await signInWithPopup(
-            //     auth, 
-            //     provider
-            // );
-    
-            // // This gives you a Google Access Token. You can use it to access the Google API.
-            // const credential = GoogleAuthProvider.credentialFromResult(result);
-            // const token = credential.accessToken;
-            // // The signed-in user info.
-            // const user = result.user;
-            
-            // console.log({ credential, token, user });
         } catch (error) {
             console.error(error);
         }
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     const logOut = async () => {
         try {
             await signOut(auth);
-            setFirebaseUser(null);
+            initializeFirebaseUser(null);
         } catch (error) {
             console.error(error);
         }
@@ -80,7 +83,9 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider 
             value={{ 
+                userInitialized,
                 firebaseUser, 
+                dbUserRef,
                 logOut,
                 promptGoogleLogin,
             }}
