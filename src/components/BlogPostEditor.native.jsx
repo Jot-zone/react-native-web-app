@@ -8,14 +8,14 @@ import QuillEditor, { QuillToolbar } from 'react-native-cn-quill';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 import { uriToBlob } from '../jot-zone/file-helpers';
 import TextInputModal from '../components/TextInputModal';
+import useStorage from '../jot-zone/storage';
 
 export default function BlogPostEditor({ blog, blogPost, onSave: onSaveProp }) {
     console.log({bpEditor: blogPost});
 
-    const [status, requestPermission] = MediaLibrary.usePermissions();
-    if (status === null) {
-        requestPermission();
-      }
+    const Storage = useStorage();
+
+    const [cameraPermissionStatus, requestPermission] = ImagePicker.useCameraPermissions();
 
     const _editor = React.createRef();
 
@@ -24,6 +24,17 @@ export default function BlogPostEditor({ blog, blogPost, onSave: onSaveProp }) {
     const toolbarHandler = async (name, value) => {
         if (name === 'image') {
             console.log('image handler');
+            console.log({cameraPermissionStatus});
+
+            if (!cameraPermissionStatus.granted) {
+                const result = await requestPermission();
+                console.log({result});
+                
+                if (!result.granted) {
+                    alert('You need to enable camera permissions for this app, to use this feature.');
+                    return;
+                }
+            }
 
             let result = await ImagePicker.launchImageLibraryAsync({
                 // quality: 0,
@@ -54,15 +65,18 @@ export default function BlogPostEditor({ blog, blogPost, onSave: onSaveProp }) {
                 const imageBlob = await uriToBlob(resizedImage.uri); // this works for android
                 // const imageBlob = await RNFetchBlob.fetch('GET', uriWithoutFilePrefix); // this hadn't worked for android
 
-                // console.log({imageBlob});
+                console.log({imageBlob});
 
                 const url = await Storage.uploadBlogImage(imageBlob, blog.slug, 'jpg');
 
-                // console.log({url});
+                console.log({url});
                 
-                _editor.current.focus();
+                _editor.current?.focus();
+
+                console.log('focused');
 
                 const range = await _editor.current.getSelection();
+                console.log({range});
                 const index = range.index ?? 0;
 
                 _editor.current.insertEmbed(
@@ -70,8 +84,6 @@ export default function BlogPostEditor({ blog, blogPost, onSave: onSaveProp }) {
                     'image', 
                     url
                 );
-            } else {
-                console.log('Image picker canceled.');
             }
         } else if (name === 'video') {
             setShowVideoUrlModal(true);

@@ -39,13 +39,13 @@ export const AuthProvider = ({ children }) => {
         });
     }, []);
 
-    const initializeFirebaseUser = (firebaseUser) => {
-        setFirebaseUser(firebaseUser);
+    const initializeFirebaseUser = async (firebaseUser) => {
+        await setFirebaseUser(firebaseUser);
 
         if (firebaseUser) {
-            setDbUserRef(doc(db, "users", firebaseUser.uid));
+            await setDbUserRef(doc(db, "users", firebaseUser.uid));
         } else {
-            setDbUserRef(null);
+            await setDbUserRef(null);
         }
 
         setUserInitialized(true);

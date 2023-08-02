@@ -12,8 +12,7 @@ export default function BlogPostContent({ blogPostContent }) {
             source={{ html: blogPostContent }}
             tagsStyles={{
                 img: {
-                    // maxWidth: imgMaxWidth
-                    maxWidth: '300px'
+                    maxWidth: imgMaxWidth
                 },
                 p: {
                     margin: 0
