@@ -9,17 +9,19 @@ const POST_LIMIT = 5;
 export default function BlogEditScreen({ navigation, route }) {
     const Blogs = useBlogs();
 
-    const blog = route.params.blog;
-
+    const [blog, setBlog] = useState(null);
     const [totalBlogPosts, setTotalBlogPosts] = useState(0);
     const [blogPosts, setBlogPosts] = useState([]);
     const [moreBlogPosts, setMoreBlogPosts] = useState(false);
 
     const initialize = async () => {
-        const totalBlogPosts = await Blogs.getBlogPostCountBySlug(blog.slug);
+        const _blog = await Blogs.getBlogBySlug(route.params.blog);
+        setBlog(_blog);
+
+        const totalBlogPosts = await Blogs.getBlogPostCountBySlug(_blog.slug);
         setTotalBlogPosts(totalBlogPosts);
 
-        const blogPostDocs = await Blogs.getBlogPostsBySlug(blog.slug, POST_LIMIT);
+        const blogPostDocs = await Blogs.getBlogPostsBySlug(_blog.slug, POST_LIMIT);
         setBlogPosts(blogPostDocs);
 
         setMoreBlogPosts(blogPostDocs.length < totalBlogPosts);
@@ -27,8 +29,10 @@ export default function BlogEditScreen({ navigation, route }) {
 
     
     useEffect(() => {
-        initialize();
-    }, []);
+        navigation.addListener('focus', () => {
+            initialize();
+        });
+    }, [navigation]);
 
     const loadMoreBlogPosts = async () => {
         const currentBlogPostCount = blogPosts.length;
@@ -44,10 +48,20 @@ export default function BlogEditScreen({ navigation, route }) {
         setMoreBlogPosts((currentBlogPostCount + moreBlogPosts.length) < totalBlogPosts);
     }
 
-    navigation.addListener('focus', () => {
+    const handlePostDelete = async (postId) => {
+        await Blogs.deleteBlogPostBySlug(blog.slug, postId);
         initialize();
-    });
+    };
 
+    // navigation.addListener('focus', () => {
+    //     initialize();
+    // });
+
+    if (!blog) {
+        return (
+           <Text>Loading...</Text>
+        );
+    }
 
     return (
         <MainLayout>
@@ -63,20 +77,28 @@ export default function BlogEditScreen({ navigation, route }) {
 
                     <Box>
                         <Button
-                            onPress={ () => navigation.navigate('New Blog Post', {blog}) }
+                            onPress={ () => navigation.navigate('New Blog Post', {blog: blog.slug}) }
                         >
                             Jot something
                         </Button>
                     </Box>
 
                     <Box>
-                        <BlogPostList blogPosts={blogPosts} />
+                        <BlogPostList 
+                            blogPosts={blogPosts} 
+                            handlePostDelete={handlePostDelete} 
+                            handleEditPost={ (blogPostId) => navigation.navigate(
+                                'New Blog Post', 
+                                { blog: blog.slug, blogPost: blogPostId }
+                            )}
+                        />
                     </Box>
 
                     { moreBlogPosts && (
                         <Box>
                             <Button
                                 w="1/5"
+                                colorScheme="secondary"
                                 onPress={ loadMoreBlogPosts }
                             >
                                 Load More

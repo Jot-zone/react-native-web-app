@@ -6,7 +6,7 @@ export default function MenuBar({ navigation }) {
     const { firebaseUser, logOut } = useContext(AuthContext);
 
     return (
-        <Box safeAreaTop bg="black">
+        <Box safeAreaTop bg="white">
           <HStack justifyContent="space-between" alignItems="center" bg="black" px="5" py="3">
               <HStack
                 alignItems="center" 
@@ -40,9 +40,9 @@ export default function MenuBar({ navigation }) {
                         </Menu>
                       </Box>
 
-                      <Text color="white" fontSize="md">
+                      {/* <Text color="white" fontSize="md">
                         {firebaseUser.displayName}
-                      </Text>
+                      </Text> */}
                     </HStack>
                   </>
                 ) : (

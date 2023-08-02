@@ -1,0 +1,121 @@
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, StatusBar, Platform } from 'react-native';
+import { Box, Text, Stack, HStack, VStack, Heading, Link, Button } from "native-base";
+import ReactQuill, { Quill } from 'react-quill';
+import * as ImagePicker from 'expo-image-picker';
+// import { ImageDrop } from 'quill-image-drop-module';
+// import ImageUploader from "quill-image-uploader";
+// import 'quill-image-uploader/dist/quill.imageUploader.min.css';
+import ImageCompress from 'quill-image-compress';
+import MainLayout from "../layouts/MainLayout";
+import 'react-quill/dist/quill.snow.css';
+import '../../assets/css/react-quill-custom.css';
+import useBlogs from '../jot-zone/blogs';
+import useStorage from '../jot-zone/storage';
+
+// Quill.register('modules/imageDrop', ImageDrop);
+// Quill.register("modules/imageUploader", ImageUploader);
+Quill.register('modules/imageCompress', ImageCompress);
+
+export default function BlogPostEditScreen({ navigation, route }) {
+    const Blogs = useBlogs();
+    const Storage = useStorage();
+
+    const _editor = React.createRef();
+    
+    const [key, setKey] = useState(0);
+    navigation.addListener('focus', () => {
+        setKey(key + 1);
+    });
+
+    // console.log({route_blog: route.params.blog});
+    // const currentBlog = Blogs.getBlogBySlug(route.params.blog).then(blog => { blog });
+    // console.log({currentBlog});
+
+    const [currentBlog, setCurrentBlog] = useState(null);
+
+    const initialize = async () => {
+        const _currentBlog = await Blogs.getBlogBySlug(route.params.blog);
+        console.log({currentBlog: _currentBlog});
+        setCurrentBlog(_currentBlog);
+    };
+
+    useEffect(() => {
+        initialize();
+    }, []);
+
+    const onImageInsert = async (imageBase64URL, imageBlob, editor) => {    
+        const url = await Storage.uploadBlogImage(imageBlob, currentBlog.slug, 'jpg');
+        editor.insertEmbed(editor.getSelection().index, 'image', url);
+    }
+
+    const onSave = async () => {
+        await Blogs.createBlogPost(currentBlog.slug, _editor.current.value);
+        navigation.navigate('Blog Edit');
+    };
+
+    const quillModules = {
+        toolbar: [
+            [{ 'header': [false, 1, 2, 3, 4, 5, 6] }],
+            ['bold', 'italic', 'underline', 'strike', 'link'],
+            ['blockquote', 'code-block'],
+            [{ 'indent': '-1'}, { 'indent': '+1' }],  
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['image', 'video'],
+        ],
+
+        // imageDrop: true,
+
+        // imageUploader: {
+        //     upload: onImageUpload
+        // }
+
+        imageCompress: {
+            quality: 0.5,
+            maxWidth: 1000,
+            maxHeight: 1000,
+            imageType: 'image/jpeg',
+            debug: true,
+            suppressErrorLogging: false,
+            insertIntoEditor: onImageInsert,
+        }
+    };
+
+    if (!currentBlog) {
+        return (
+           <Text>Loading...</Text>
+        );
+    }
+
+    return (
+        <MainLayout>
+            <Box alignSelf="center" w="full" maxW="desktop">
+                <Box h="600px">
+                    <ReactQuill 
+                        key={key}
+                        ref={_editor}
+                        theme="snow" 
+                        placeholder='Jot here...'
+                        modules={quillModules}
+                        style={styles.quill}
+                    />  
+                </Box>
+
+                <Box marginTop="20" alignItems="center">
+                    <Button
+                        w="2/5"
+                        onPress={ onSave }
+                    >
+                        Save
+                    </Button>
+                </Box>
+            </Box>
+        </MainLayout>
+    );
+}
+
+const styles = StyleSheet.create({
+    quill: {
+        height: '100%',
+    }
+});

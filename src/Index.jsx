@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
-import { NativeBaseProvider } from "native-base";
+import { Box, NativeBaseProvider, Text } from "native-base";
 import { AuthProvider } from "./contexts/auth";
 import useUsers from './jot-zone/users';
 
@@ -20,9 +20,12 @@ export default function App() {
           ) }
         </>
       ) : (
-        <></>
+        <>
+          <Text>
+            Initializing user...
+          </Text>
+        </>
       ) }
-
       <StatusBar bg="#3700B3" barStyle="light-content" />
     </>
   );

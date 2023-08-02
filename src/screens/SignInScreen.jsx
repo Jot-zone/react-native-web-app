@@ -17,10 +17,9 @@ export default function SignInScreen() {
                 </Button>
             ) : (
                 <Button onPress={ () => promptGoogleLogin() } m={3}>
-                    Sign In with G
+                    Sign In with Google
                 </Button>
             ) }
-
         </Box>
     </MainLayout>
 }

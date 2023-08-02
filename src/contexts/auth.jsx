@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     useEffect(() => {
+        console.log({response})
         if (response?.type === "success") {
           const { id_token } = response.params;
           const credential = GoogleAuthProvider.credential(id_token);
@@ -33,7 +34,7 @@ export const AuthProvider = ({ children }) => {
                 // https://firebase.google.com/docs/reference/js/auth.user
                 initializeFirebaseUser(user);
             } else {
-                // console.log('no user');
+                initializeFirebaseUser(null);
             }
         });
     }, []);
