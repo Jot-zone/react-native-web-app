@@ -1,10 +1,9 @@
-import { createRef, RefObject, useEffect, useState, useCallback } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { Box, Text, Container, Flex, AspectRatio, Pressable, Modal} from 'native-base';
-import Gallery from 'react-native-image-gallery';
+import { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { Flex, Pressable } from 'native-base';
 import { Image } from 'expo-image';
 import { BlogPostMedia } from '../jot-zone/blog-posts';
-import { set } from 'react-native-reanimated';
+import MediaGalleryFull from './MediaGalleryFull';
 
 interface MediaGalleryProps {
     medias: Array<BlogPostMedia>;
@@ -17,32 +16,19 @@ export default function MediaGallery({
     const [fullscreenInitialPage, setFullscreenInitialPage] = useState(0);
     
     const onMediaPress = (idx: number) => {
+        console.log('onMediaPress', idx);
         setFullscreenInitialPage(idx);
         setShowFullscreen(true);
     }
 
     if (showFullscreen) {
         return (
-            <Modal
+            <MediaGalleryFull
+                medias={medias}
                 isOpen={showFullscreen}
+                startIndex={fullscreenInitialPage}
                 onClose={() => setShowFullscreen(false)}
-                size="full"
-                style={{ backgroundColor: 'red' }}
-            >
-                <Modal.CloseButton />
-                
-                <Gallery
-                    style={{ 
-                        backgroundColor: 'black',
-                        width: '100%',
-                        margin: 0,
-                    }}
-                    images={medias.map(media => ({
-                        source: { uri: media.url },
-                    }))}
-                    initialPage={fullscreenInitialPage}
-                />
-            </Modal>
+            />
         )
     }
 

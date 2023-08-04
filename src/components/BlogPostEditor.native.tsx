@@ -1,5 +1,4 @@
 import React, { RefObject, useState } from 'react';
-import { flushSync } from 'react-dom';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, StatusBar } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
@@ -7,12 +6,10 @@ import { Box, Button, HStack } from "native-base";
 import QuillEditor, { QuillToolbar } from 'react-native-cn-quill';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 import { uriToBlob } from '../jot-zone/file-helpers';
-import TextInputModal from '../components/TextInputModal';
 import useStorage from '../jot-zone/storage';
 import MediaManagementToolbar from './MediaManagementToolbar';
 import { Blog } from '../jot-zone/blogs';
 import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
-import { set } from 'react-native-reanimated';
 
 interface BlogPostEditorProps {
     blog: Blog,
