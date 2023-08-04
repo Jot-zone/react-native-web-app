@@ -3,11 +3,13 @@ import useBlogs from '../jot-zone/blogs';
 import BlogPostEditor from '../components/BlogPostEditor';
 import { Box, Text } from 'native-base';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import useBlogPosts, { BlogPostInput } from '../jot-zone/blog-posts';
 
 export default function BlogPostEditScreen({ navigation, route }) {
     const isFocused = useIsFocused();
     
     const Blogs = useBlogs();
+    const BlogPosts = useBlogPosts();
 
     
     const [loading, setLoading] = useState(true);
@@ -22,7 +24,7 @@ export default function BlogPostEditScreen({ navigation, route }) {
         setCurrentBlog(_currentBlog);
 
         const _currentBlogPost = route.params.blogPost 
-            ? await Blogs.getBlogPostBySlug(_currentBlog.slug, route.params.blogPost) 
+            ? await BlogPosts.getBlogPostBySlug(_currentBlog.slug, route.params.blogPost) 
             : null;
         console.log({currentBlogPosttt: _currentBlogPost});
         setCurrentBlogPost(_currentBlogPost);
@@ -37,12 +39,16 @@ export default function BlogPostEditScreen({ navigation, route }) {
     );
 
 
-    const onSave = async (html) => {
-        console.log({currentBlogPost, html});
+    const onSave = async (blogPostInput: BlogPostInput) => {
+        console.log({currentBlogPost, blogPostInput});
         if (currentBlogPost) {
-            await Blogs.updateBlogPostBySlug(currentBlog.slug, route.params.blogPost, html);
+            await BlogPosts.update(
+                currentBlog.slug, 
+                route.params.blogPost, 
+                blogPostInput
+            );
         } else {
-            await Blogs.createBlogPost(currentBlog.slug, html);
+            await BlogPosts.create(currentBlog.slug, blogPostInput);
         }
 
         navigation.navigate('Blog Edit');

@@ -1,14 +1,10 @@
 import { Box, Text, VStack, HStack, Button } from "native-base";
 import moment from 'moment';
 import BlogPostContent from "./BlogPostContent";
+import MediaGallery from "./MediaGallery";
 
 export default function BlogPostList({ blogPosts, handlePostDelete, handleEditPost }) {
     blogPosts = blogPosts.map(function(post) {
-        post = {
-            id: post.id,
-            ...post.data()
-        };
-
         const createdMoment = moment(post.created_at);
         const nowMoment = moment();
 
@@ -22,7 +18,7 @@ export default function BlogPostList({ blogPosts, handlePostDelete, handleEditPo
     });
 
     return (
-        <VStack space="3" marginTop="5">
+        <VStack space="5" marginTop="5">
             {blogPosts.map((post) => (
                 <Box 
                     key={post.id}
@@ -54,9 +50,17 @@ export default function BlogPostList({ blogPosts, handlePostDelete, handleEditPo
                         </Box>
                     </HStack>
                     
-                    <Box marginY="3">
-                        <BlogPostContent blogPostContent={post.content} />
-                    </Box>
+                    { post.content && (
+                        <Box marginY="3">
+                            <BlogPostContent blogPostContent={post.content} />
+                        </Box>
+                    )}
+
+                    { post.medias?.length && (
+                        <Box marginY="2">
+                            <MediaGallery medias={post.medias} />
+                        </Box>
+                    )}
                 </Box>
             ))}
         </VStack>

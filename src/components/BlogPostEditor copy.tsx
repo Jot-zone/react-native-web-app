@@ -1,25 +1,43 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import {  StyleSheet } from 'react-native';
 import { Box, Button } from "native-base";
 import ReactQuill, { Quill } from 'react-quill';
 import ImageCompress from 'quill-image-compress';
+import useStorage from '../jot-zone/storage';
+import { Blog } from '../jot-zone/blogs';
+import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
 import 'react-quill/dist/quill.snow.css';
 import '../../assets/css/react-quill-custom.css';
 
 Quill.register('modules/imageCompress', ImageCompress);
 
-export default function BlogPostEditor({ blog, blogPost, onSave: onSaveProp }) {
+interface BlogPostEditorProps {
+    blog: Blog,
+    blogPost?: BlogPost,
+    onSave: (blogPostInput: BlogPostInput) => void,
+}
+
+export default function BlogPostEditor({ 
+    blog, 
+    blogPost, 
+    onSave: onSaveProp 
+}: BlogPostEditorProps) {
     console.log({bpEditor: blogPost});
 
-    const _editor = React.createRef();
+    const Storage = useStorage();
 
-    const onImageInsert = async (imageBase64URL, imageBlob, editor) => {    
-        const url = await Storage.uploadBlogImage(imageBlob, blog.slug, 'jpg');
-        editor.insertEmbed(editor.getSelection().index, 'image', url);
-    }
+    const _editor: RefObject<ReactQuill> = React.createRef();
+
+    // const onImageInsert = async (imageBase64URL, imageBlob, editor) => {    
+    //     const url = await Storage.uploadBlogImage(imageBlob, blog.slug, 'jpg');
+    //     editor.insertEmbed(editor.getSelection().index, 'image', url);
+    // }
 
     const onSave = async () => {
-        onSaveProp(_editor.current.value);
+        onSaveProp({
+            content: _editor.current.value.toString(),
+            medias: [], //todo
+        });
     };
 
     const quillModules = {
@@ -29,18 +47,17 @@ export default function BlogPostEditor({ blog, blogPost, onSave: onSaveProp }) {
             ['blockquote', 'code-block'],
             [{ 'indent': '-1'}, { 'indent': '+1' }],  
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['image', 'video'],
         ],
 
-        imageCompress: {
-            quality: 0.5,
-            maxWidth: 1000,
-            maxHeight: 1000,
-            imageType: 'image/jpeg',
-            debug: true,
-            suppressErrorLogging: false,
-            insertIntoEditor: onImageInsert,
-        }
+        // imageCompress: {
+        //     quality: 1,
+        //     maxWidth: 1000,
+        //     maxHeight: 1000,
+        //     imageType: 'image/jpeg',
+        //     debug: true,
+        //     suppressErrorLogging: false,
+        //     insertIntoEditor: onImageInsert,
+        // }
     };
 
     return (

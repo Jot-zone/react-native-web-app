@@ -3,11 +3,13 @@ import { Box, Text, Stack, HStack, VStack, Heading, Link, Button } from "native-
 import MainLayout from "../layouts/MainLayout";
 import useBlogs from "../jot-zone/blogs";
 import BlogPostList from "../components/BlogPostList";
+import useBlogPosts from "../jot-zone/blog-posts";
 
 const POST_LIMIT = 5;
 
 export default function BlogEditScreen({ navigation, route }) {
     const Blogs = useBlogs();
+    const BlogPosts = useBlogPosts();
 
     const [blog, setBlog] = useState(null);
     const [totalBlogPosts, setTotalBlogPosts] = useState(0);
@@ -18,10 +20,10 @@ export default function BlogEditScreen({ navigation, route }) {
         const _blog = await Blogs.getBlogBySlug(route.params.blog);
         setBlog(_blog);
 
-        const totalBlogPosts = await Blogs.getBlogPostCountBySlug(_blog.slug);
+        const totalBlogPosts = await BlogPosts.getBlogPostCountBySlug(_blog.slug);
         setTotalBlogPosts(totalBlogPosts);
 
-        const blogPostDocs = await Blogs.getBlogPostsBySlug(_blog.slug, POST_LIMIT);
+        const blogPostDocs = await BlogPosts.getBlogPostsBySlug(_blog.slug, POST_LIMIT);
         setBlogPosts(blogPostDocs);
 
         setMoreBlogPosts(blogPostDocs.length < totalBlogPosts);
@@ -37,7 +39,7 @@ export default function BlogEditScreen({ navigation, route }) {
     const loadMoreBlogPosts = async () => {
         const currentBlogPostCount = blogPosts.length;
 
-        const moreBlogPosts = await Blogs.getBlogPostsBySlug(
+        const moreBlogPosts = await BlogPosts.getBlogPostsBySlug(
             blog.slug, 
             POST_LIMIT, 
             blogPosts[blogPosts.length - 1]
@@ -49,7 +51,7 @@ export default function BlogEditScreen({ navigation, route }) {
     }
 
     const handlePostDelete = async (postId) => {
-        await Blogs.deleteBlogPostBySlug(blog.slug, postId);
+        await BlogPosts.destroy(blog.slug, postId);
         initialize();
     };
 
