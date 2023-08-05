@@ -13,7 +13,7 @@ interface SubdomainNavProps {
 
 export default function SubdomainNav({
   subdomain,
-}) {
+}: SubdomainNavProps) {
   const Blogs = useBlogs();
 
   const [currentBlog, setCurrentBlog] = useState<Blog|null>(null);
@@ -45,7 +45,7 @@ export default function SubdomainNav({
               blog: currentBlog,
             }}
             options={{
-              title: currentBlog.name + ' - Jot.zone',
+              title: currentBlog.name + ' | Jot.zone',
               headerTitle: 'Jot.zone',
             }}
           />

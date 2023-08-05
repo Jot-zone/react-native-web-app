@@ -19,6 +19,7 @@ export default function MediaGalleryFull({
 }: MediaGallerFullProps) {
     const [images, setImages] = useState([]);
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [scrollBottom, setScrollBottom] = useState(0);
 
     useEffect(() => {
         setImages(medias.map(media => ({
@@ -29,24 +30,37 @@ export default function MediaGalleryFull({
 
     useEffect(() => {
         setScrollPosition(window.pageYOffset);
+        setScrollBottom(window.pageYOffset + window.innerHeight);
     }, [isOpen]);
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            size="full"
-            safeAreaTop={true}
-            style={{ 
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                top: scrollPosition + 'px',
-            }}
-        >
-            <ImageGallery
-                items={images}
-                startIndex={startIndex}
-                showPlayButton={false}
-            />         
-        </Modal>
+        <>
+            <style>{`
+                #root {
+                    height: ${scrollBottom}px;
+                }
+            `}</style>
+
+            <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                size="full"
+                safeAreaTop={true}
+                style={{ 
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    top: scrollPosition + 'px',
+                    height: '100vh',
+                }}
+            >
+                <ImageGallery
+                    items={images}
+                    startIndex={startIndex}
+                    showPlayButton={false}
+                    style={{
+
+                    }}
+                />
+            </Modal>
+        </>
     )
 }
