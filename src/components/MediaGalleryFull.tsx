@@ -26,9 +26,16 @@ export default function MediaGalleryFull({
             isOpen={isOpen}
             onClose={onClose}
             size="full"
+            safeAreaTop={true}
             style={{ 
-                backgroundColor: 'rgba(0, 0, 0, 0.7)'
-             }}
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                // backgroundColor: 'red',
+                // position: 'absolute',
+                // top: '0px',
+                // right: '0px',
+                // bottom: '0px',
+                // left: '0px',
+            }}
         >
             <ImageGallery
                 items={images}

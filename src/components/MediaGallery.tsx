@@ -21,44 +21,44 @@ export default function MediaGallery({
         setShowFullscreen(true);
     }
 
-    if (showFullscreen) {
-        return (
-            <MediaGalleryFull
-                medias={medias}
-                isOpen={showFullscreen}
-                startIndex={fullscreenInitialPage}
-                onClose={() => setShowFullscreen(false)}
-            />
-        )
-    }
-
     return (
-        <Flex direction="row" wrap="wrap">
-            { medias.map((media, idx) => (
-                <Pressable
-                    key={idx}
-                    onPress={() => onMediaPress(idx)}
-                    style={styles.container}
-                    // height={{
-                    //     base: 300,
-                    //     md: 300,
-                    // }}
-                    width={{
-                        base: '50%',
-                        md: '50%',
-                    }}
-                >
-                    <Image
-                        style={styles.image}
-                        source={media.url}
-                        placeholder={blurhash}
-                        contentFit="cover"
-                        contentPosition="center"
-                        transition={1000}
-                    />
-                </Pressable>
-            )) }
-        </Flex>
+        <>
+            { showFullscreen && (
+                <MediaGalleryFull
+                    medias={medias}
+                    isOpen={showFullscreen}
+                    startIndex={fullscreenInitialPage}
+                    onClose={() => setShowFullscreen(false)}
+                />   
+            )}
+
+            <Flex direction="row" wrap="wrap">
+                { medias.map((media, idx) => (
+                    <Pressable
+                        key={idx}
+                        onPress={() => onMediaPress(idx)}
+                        style={styles.container}
+                        // height={{
+                        //     base: 300,
+                        //     md: 300,
+                        // }}
+                        width={{
+                            base: '50%',
+                            md: '50%',
+                        }}
+                    >
+                        <Image
+                            style={styles.image}
+                            source={media.url}
+                            placeholder={blurhash}
+                            contentFit="cover"
+                            contentPosition="center"
+                            transition={1000}
+                        />
+                    </Pressable>
+                )) }
+            </Flex>
+        </>
     );
 }
 

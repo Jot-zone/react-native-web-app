@@ -7,8 +7,7 @@ import useBlogPosts from "../jot-zone/blog-posts";
 
 const POST_LIMIT = 5;
 
-export default function BlogEditScreen({ navigation, route }) {
-    const Blogs = useBlogs();
+export default function BlogViewScreen({ navigation, route }) {
     const BlogPosts = useBlogPosts();
 
     const [blog, setBlog] = useState(null);
@@ -17,7 +16,7 @@ export default function BlogEditScreen({ navigation, route }) {
     const [moreBlogPosts, setMoreBlogPosts] = useState(false);
 
     const initialize = async () => {
-        const _blog = await Blogs.getBlogBySlug(route.params.blog);
+        const _blog = route.params.blog;
         setBlog(_blog);
 
         const totalBlogPosts = await BlogPosts.getBlogPostCountBySlug(_blog.slug);
@@ -67,27 +66,21 @@ export default function BlogEditScreen({ navigation, route }) {
 
     return (
         <MainLayout>
-            <Box alignSelf="center" w="full" maxW="xl">
+            <Box alignSelf="center" w="full" maxW="xl" marginTop="2">
                 <VStack space="5">
-                    <Heading size="md" textAlign="center">
+                    <Heading size="lg" textAlign="center">
                         {blog.name}
                     </Heading>
 
-                    <Heading size="xs" textAlign="center">
+                    <Heading size="sm" textAlign="center" color="blue.700"
+                        href={`https://${blog.slug}.jot.zone`}
+                    >
                         {blog.slug}.jot.zone
                     </Heading>
 
                     <Box>
-                        <Button
-                            onPress={ () => navigation.navigate('New Blog Post', {blog: blog.slug}) }
-                        >
-                            Jot something
-                        </Button>
-                    </Box>
-
-                    <Box>
                         <BlogPostList 
-                            editMode={true}
+                            editMode={false}
                             blogPosts={blogPosts} 
                             handlePostDelete={handlePostDelete} 
                             handleEditPost={ (blogPostId) => navigation.navigate(

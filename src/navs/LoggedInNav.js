@@ -30,7 +30,12 @@ export default function LoggedInNav() {
     }, []);
 
     const linking = {
-        prefixes: ['https://jot.zone', 'http://localhost:19006'],
+        prefixes: [
+            'https://jot.zone', 
+            'https://app.jot.zone',
+            'http://localhost:19006',
+            'http://app.localhost:19006',
+        ],
         config: {
             screens: {
                 'Blog Edit': {

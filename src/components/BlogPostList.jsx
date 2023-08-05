@@ -3,7 +3,12 @@ import moment from 'moment';
 import BlogPostContent from "./BlogPostContent";
 import MediaGallery from "./MediaGallery";
 
-export default function BlogPostList({ blogPosts, handlePostDelete, handleEditPost }) {
+export default function BlogPostList({ 
+    editMode = false,
+    blogPosts, 
+    handlePostDelete, 
+    handleEditPost 
+}) {
     blogPosts = blogPosts.map(function(post) {
         const createdMoment = moment(post.created_at);
         const nowMoment = moment();
@@ -33,21 +38,23 @@ export default function BlogPostList({ blogPosts, handlePostDelete, handleEditPo
                             { post.created_at_string }
                         </Text>
 
-                        <Box>
-                            <HStack space="2">
-                                <Button size="xs" colorScheme="primary"
-                                    onPress={ () => handleEditPost(post.id)}
-                                >
-                                    Edit
-                                </Button>
+                        { editMode && (
+                            <Box>
+                                <HStack space="2">
+                                    <Button size="xs" colorScheme="primary"
+                                        onPress={ () => handleEditPost(post.id)}
+                                    >
+                                        Edit
+                                    </Button>
 
-                                <Button size="xs" colorScheme="danger"
-                                    onPress={ () => handlePostDelete(post.id) }
-                                >
-                                    Delete
-                                </Button>
-                            </HStack>
-                        </Box>
+                                    <Button size="xs" colorScheme="danger"
+                                        onPress={ () => handlePostDelete(post.id) }
+                                    >
+                                        Delete
+                                    </Button>
+                                </HStack>
+                            </Box>
+                        )}
                     </HStack>
                     
                     { post.content && (

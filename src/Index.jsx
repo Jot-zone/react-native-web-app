@@ -1,32 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
-import { Box, NativeBaseProvider, Text } from "native-base";
+import { Box, NativeBaseProvider, Text, View } from "native-base";
 import { AuthProvider } from "./contexts/auth";
 import useUsers from './jot-zone/users';
 
 import LoggedOutNav from './navs/LoggedOutNav';
 import LoggedInNav from './navs/LoggedInNav';
+import { Platform } from 'react-native';
+import SubdomainNav from './navs/SubdomainNav';
 export default function App() {
   const Users = useUsers();
 
+  const subdomain = Platform.OS === 'web'
+    ? window.location.hostname.split('.')[0]
+    : null;
+
+  // Route for a subdomain.
+  if (subdomain && subdomain !== 'app') {
+    return (
+      <>
+        <SubdomainNav subdomain={subdomain} />
+      
+        <StatusBar bg="#3700B3" barStyle="light-content" />
+      </>
+    );
+  }
+
+  // Before user initialized.
+  if ( ! Users.userInitialized) {
+    return (
+      <Box safeArea>
+        <Text>
+          Initializing user...
+        </Text>
+  
+        <StatusBar bg="#3700B3" barStyle="light-content" />
+      </Box>
+    );
+  }
+  
+  // Main app.
   return (
     <>
-      { Users.userInitialized ? (
-        <>
-          { Users.firebaseUser ? (
-            <LoggedInNav />
-          ) : (
-            <LoggedOutNav />
-          ) }
-        </>
+      { Users.firebaseUser ? (
+        <LoggedInNav />
       ) : (
-        <>
-          <Text>
-            Initializing user...
-          </Text>
-        </>
+        <LoggedOutNav />
       ) }
+
       <StatusBar bg="#3700B3" barStyle="light-content" />
     </>
-  );
+  )
 }
