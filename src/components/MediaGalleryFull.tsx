@@ -2,6 +2,7 @@ import { Modal } from 'native-base';
 import { BlogPostMedia } from '../jot-zone/blog-posts';
 import ImageGallery from "react-image-gallery";
 import 'react-image-gallery/styles/css/image-gallery.css';
+import { useEffect, useState } from 'react';
 
 interface MediaGallerFullProps {
     medias: Array<BlogPostMedia>;
@@ -16,10 +17,19 @@ export default function MediaGalleryFull({
     startIndex,
     onClose,
 }: MediaGallerFullProps) {
-    const images = medias.map(media => ({
-        original: media.url,
-        thumbnail: media.url,
-    }));
+    const [images, setImages] = useState([]);
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    useEffect(() => {
+        setImages(medias.map(media => ({
+            original: media.url,
+            thumbnail: media.url,
+        })));
+    }, [medias]);
+
+    useEffect(() => {
+        setScrollPosition(window.pageYOffset);
+    }, [isOpen]);
 
     return (
         <Modal
@@ -29,12 +39,7 @@ export default function MediaGalleryFull({
             safeAreaTop={true}
             style={{ 
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                // backgroundColor: 'red',
-                // position: 'absolute',
-                // top: '0px',
-                // right: '0px',
-                // bottom: '0px',
-                // left: '0px',
+                top: scrollPosition + 'px',
             }}
         >
             <ImageGallery
