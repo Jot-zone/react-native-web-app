@@ -3,17 +3,14 @@ import {  StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Button, HStack, VStack } from "native-base";
 import ReactQuill, { Quill } from 'react-quill';
-import * as ImagePicker from 'expo-image-picker';
 import ImageCompress from 'quill-image-compress';
-import ImageResizer from '@bam.tech/react-native-image-resizer';
 import MediaManagementToolbar from './MediaManagementToolbar';
 import useStorage from '../jot-zone/storage';
 import { Blog } from '../jot-zone/blogs';
-import { getImageMeta, uriToBlob } from '../jot-zone/file-helpers';
+import { getImageMeta } from '../jot-zone/file-helpers';
 import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
 import 'react-quill/dist/quill.snow.css';
 import '../../assets/css/react-quill-custom.css';
-import { set } from 'react-native-reanimated';
 
 Quill.register('modules/imageCompress', ImageCompress);
 
@@ -90,8 +87,16 @@ export default function BlogPostEditor({
 
     return (
         <>
+            <style>
+                {`
+                    .ql-container {
+                        height: 50vh;
+                    }
+                `}
+            </style>
+
             <VStack alignSelf="center" w="full" maxW="desktop">
-                <Box style={{ height: '642px' }}>
+                <Box style={{  }}>
                     <ReactQuill 
                         ref={_editor}
                         theme="snow" 
@@ -114,7 +119,7 @@ export default function BlogPostEditor({
                     />
                 </Box>
 
-                <Box marginTop="5" alignItems="center">
+                <Box m="3" alignItems="center">
                     <HStack w="full" space={5}
                         justifyContent="center"
                     >
@@ -123,7 +128,7 @@ export default function BlogPostEditor({
                             /* @ts-ignore */
                             onPress={ () => navigation.navigate('Blog Edit', {blog: blog.slug}) }
                             flexGrow={1}
-                            width="1/2"
+                            // width="1/2"
                             maxW="md"
                         >
                             Cancel
@@ -132,7 +137,7 @@ export default function BlogPostEditor({
                         <Button
                             onPress={ onSave }
                             flexGrow={1}
-                            width="1/2"
+                            // width="1/2"
                             maxW="md"
                         >
                             Save
@@ -146,6 +151,10 @@ export default function BlogPostEditor({
 
 const styles = StyleSheet.create({
     quill: {
+        // height: '600px',
+    },
+
+    quillEditor: {
         height: '600px',
     }
 });
