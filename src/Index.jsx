@@ -8,12 +8,28 @@ import LoggedOutNav from './navs/LoggedOutNav';
 import LoggedInNav from './navs/LoggedInNav';
 import { Platform } from 'react-native';
 import SubdomainNav from './navs/SubdomainNav';
+
+const APP_REDIRECT_SUBDOMAINS = [
+  'www',
+  'jot',
+  'localhost',
+];
+
 export default function App() {
   const Users = useUsers();
 
   const subdomain = Platform.OS === 'web'
     ? window.location.hostname.split('.')[0]
     : null;
+
+  // Redirect to app subdomain.
+  if (APP_REDIRECT_SUBDOMAINS.includes(subdomain)) {
+    return window.location.replace(
+      window.location.protocol + '//' + 'app.' + window.location.hostname
+      + (window.location.port ? ':' + window.location.port : '')
+    ); 
+  }
+
 
   // Route for a subdomain.
   if (subdomain && subdomain !== 'app') {
