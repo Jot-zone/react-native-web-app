@@ -1,8 +1,9 @@
-import { Modal } from 'native-base';
+import { Modal, Text, Image } from 'native-base';
 import { BlogPostMedia } from '../jot-zone/blog-posts';
 import ImageGallery from "react-image-gallery";
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { useEffect, useState } from 'react';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 interface MediaGallerFullProps {
     medias: Array<BlogPostMedia>;
@@ -11,13 +12,18 @@ interface MediaGallerFullProps {
     onClose: () => void;
 }
 
+interface ImageGalleryItem {
+    original: string;
+    thumbnail: string;
+}
+
 export default function MediaGalleryFull({
     medias,
     isOpen,
     startIndex,
     onClose,
 }: MediaGallerFullProps) {
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState<Array<ImageGalleryItem>>([]);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [scrollBottom, setScrollBottom] = useState(0);
 
@@ -25,7 +31,7 @@ export default function MediaGalleryFull({
         setImages(medias.map(media => ({
             original: media.url,
             thumbnail: media.url,
-        })));
+        } as ImageGalleryItem)));
     }, [medias]);
 
     useEffect(() => {
@@ -38,6 +44,18 @@ export default function MediaGalleryFull({
             <style>{`
                 #root {
                     height: ${scrollBottom}px;
+                }
+
+                .image-gallery-slides {
+                    overflow: visible;
+                }
+
+                .image-gallery-right {
+                    display: none !important;
+                }
+
+                .image-gallery-left {
+                    display: none !important;
                 }
             `}</style>
 
@@ -56,9 +74,29 @@ export default function MediaGalleryFull({
                     items={images}
                     startIndex={startIndex}
                     showPlayButton={false}
+                    showFullscreenButton={false}
                     style={{
 
                     }}
+                    renderItem={(item) => (
+                        <TransformWrapper
+                            // limitToBounds={false}
+                        >
+                            <TransformComponent
+                                wrapperStyle={{
+                                    // position: 'absolute',
+                                    // height: '100vh',
+                                    // width: '100vw',
+                                    overflow: 'visible',
+                                }}
+                            >
+                                <img
+                                    src={item.original}
+                                    alt="gallery image"
+                                />
+                            </TransformComponent>
+                        </TransformWrapper>
+                    )}
                 />
             </Modal>
         </>

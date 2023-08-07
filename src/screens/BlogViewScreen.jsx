@@ -66,7 +66,7 @@ export default function BlogViewScreen({ navigation, route }) {
 
     return (
         <MainLayout>
-            <Box alignSelf="center" w="full" maxW="xl" marginTop="2">
+            <Box alignSelf="center" w="full" maxW="desktop" marginTop="2">
                 <VStack space="5">
                     <Heading size="lg" textAlign="center">
                         {blog.name}
