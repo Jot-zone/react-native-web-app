@@ -39,7 +39,11 @@ export default function SubdomainNav({
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
+      <Drawer.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Drawer.Screen 
             name={currentBlog.name}
             component={BlogViewScreen}
