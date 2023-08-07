@@ -8,6 +8,23 @@ const POST_STYLES = `
         p {
             margin: 0;
         }
+
+        pre {
+            background: #e8ffe8;
+            padding: 0.5em 10px;
+            border-radius: 3px;
+        }
+
+        blockquote {
+            background: #f9f9f9;
+            border-left: 10px solid #ccc;
+            margin: 1.5em 10px;
+            padding: 0.5em 10px;
+        }
+
+        blockquote p {
+            display: inline;
+        }
     </style>
 `
 

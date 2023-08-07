@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
-import { Box, Text, Stack, HStack, VStack, Heading, Link, Button } from "native-base";
+import { useState, useEffect, useRef } from "react";
+import { Box, Text, VStack, Heading, Button, AlertDialog, Icon, HStack } from "native-base";
 import MainLayout from "../layouts/MainLayout";
 import useBlogs from "../jot-zone/blogs";
 import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
+import DeleteConfirmation from "../components/DeleteConfirmation";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const POST_LIMIT = 5;
 
@@ -16,7 +18,11 @@ export default function BlogEditScreen({ navigation, route }) {
     const [blogPosts, setBlogPosts] = useState([]);
     const [moreBlogPosts, setMoreBlogPosts] = useState(false);
 
+    const [deletePostId, setDeletePostId] = useState(null);
+
     const initialize = async () => {
+        setDeletePostId(null);
+
         const _blog = await Blogs.getBlogBySlug(route.params.blog);
         setBlog(_blog);
 
@@ -47,11 +53,17 @@ export default function BlogEditScreen({ navigation, route }) {
 
         setBlogPosts([...blogPosts, ...moreBlogPosts]);
 
-        setMoreBlogPosts((currentBlogPostCount + moreBlogPosts.length) < totalBlogPosts);
+        setMoreBlogPosts(
+            (currentBlogPostCount + moreBlogPosts.length) < totalBlogPosts
+        );
     }
 
-    const handlePostDelete = async (postId) => {
-        await BlogPosts.destroy(blog.slug, postId);
+    const handlePostDelete = (postId) => {
+        setDeletePostId(postId);
+    };
+
+    const handlePostDeleteConfirmation = async () => {
+        await BlogPosts.destroy(blog.slug, deletePostId);
         initialize();
     };
 
@@ -67,7 +79,7 @@ export default function BlogEditScreen({ navigation, route }) {
 
     return (
         <MainLayout>
-            <Box alignSelf="center" w="full" maxW="xl">
+            <Box alignSelf="center" w="full" maxW="desktop">
                 <VStack space="5">
                     <Heading size="md" textAlign="center">
                         {blog.name}
@@ -77,11 +89,23 @@ export default function BlogEditScreen({ navigation, route }) {
                         {blog.slug}.jot.zone
                     </Heading>
 
-                    <Box>
+                    <Box 
+                        // alignItems="center"
+                    >
                         <Button
+                            w="full"
+                            maxW="48"
+                            size="lg"
+                            alignSelf="center"
                             onPress={ () => navigation.navigate('New Blog Post', {blog: blog.slug}) }
                         >
-                            Jot something
+                            <HStack alignItems="center" space="1">
+                                <Icon as={MaterialIcons} name="add" color="white" />
+
+                                <Text color="white">
+                                    Jot something
+                                </Text>
+                            </HStack>
                         </Button>
                     </Box>
 
@@ -110,6 +134,13 @@ export default function BlogEditScreen({ navigation, route }) {
                     )}
                 </VStack>
             </Box>
+
+            <DeleteConfirmation
+                isOpen={ deletePostId !== null }
+                onClose={ () => setDeletePostId(null) }
+                onDelete={ handlePostDeleteConfirmation }
+                recordType="Blog Post"
+            />
         </MainLayout>
     );
 }

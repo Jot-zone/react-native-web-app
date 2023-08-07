@@ -29,6 +29,8 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
+            setUserInitialized(false);
+
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/auth.user
@@ -40,14 +42,14 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const initializeFirebaseUser = async (firebaseUser) => {
-        await setFirebaseUser(firebaseUser);
+        setFirebaseUser(firebaseUser);
 
         if (firebaseUser) {
-            await setDbUserRef(doc(db, "users", firebaseUser.uid));
+            setDbUserRef(doc(db, "users", firebaseUser.uid));
         } else {
-            await setDbUserRef(null);
+            setDbUserRef(null);
         }
-
+        
         setUserInitialized(true);
     }
 

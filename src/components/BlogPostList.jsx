@@ -27,13 +27,16 @@ export default function BlogPostList({
             {blogPosts.map((post) => (
                 <Box 
                     key={post.id}
+                    backgroundColor="white"
                     borderWidth="1"
                     borderColor="gray.300"
                     borderRadius="md"
                     paddingX="3"
                     paddingY="2"
                 >
-                    <HStack space="1" justifyContent="space-between">
+                    <HStack space="1" justifyContent="space-between"
+                        marginBottom="5"
+                    >
                         <Text color="gray.700" fontSize="sm">
                             { post.created_at_string }
                         </Text>
@@ -41,7 +44,7 @@ export default function BlogPostList({
                         { editMode && (
                             <Box>
                                 <HStack space="2">
-                                    <Button size="xs" colorScheme="primary"
+                                    <Button size="xs" colorScheme="info"
                                         onPress={ () => handleEditPost(post.id)}
                                     >
                                         Edit
@@ -58,13 +61,13 @@ export default function BlogPostList({
                     </HStack>
                     
                     { post.content && (
-                        <Box marginY="3">
+                        <Box marginBottom="5">
                             <BlogPostContent blogPostContent={post.content} />
                         </Box>
                     )}
 
                     { post.medias?.length && (
-                        <Box marginY="2">
+                        <Box>
                             <MediaGallery medias={post.medias} />
                         </Box>
                     )}

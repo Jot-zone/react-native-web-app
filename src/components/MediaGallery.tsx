@@ -44,7 +44,7 @@ export default function MediaGallery({
                         // }}
                         width={{
                             base: '50%',
-                            md: '50%',
+                            md: '1/3',
                         }}
                     >
                         <Image

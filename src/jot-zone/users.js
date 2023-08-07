@@ -6,8 +6,6 @@ export default function useUsers() {
     const { firebaseUser, dbUserRef, userInitialized } = useContext(AuthContext);
 
     const getDbUser = async () => {
-        console.log(firebaseUser.uid);
-
         try {
             var docSnap = await getDoc(dbUserRef);
         } catch (e) {
