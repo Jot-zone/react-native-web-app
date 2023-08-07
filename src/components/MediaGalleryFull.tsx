@@ -36,7 +36,12 @@ export default function MediaGalleryFull({
 
     useEffect(() => {
         setScrollPosition(window.pageYOffset);
+
+        // console.log('window.pageYOffset', window.pageYOffset);
+        // console.log('window.innerHeight', window.innerHeight);
+
         setScrollBottom(window.pageYOffset + window.innerHeight);
+        // setScrollBottom(window.innerHeight);
     }, [isOpen]);
 
     return (
@@ -75,6 +80,7 @@ export default function MediaGalleryFull({
                     startIndex={startIndex}
                     showPlayButton={false}
                     showFullscreenButton={false}
+                    showThumbnails={false}
                     style={{
 
                     }}

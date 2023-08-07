@@ -4,8 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Box, Text } from 'native-base';
 import useBlogs, { Blog } from '../jot-zone/blogs';
 import BlogViewScreen from '../screens/BlogViewScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 interface SubdomainNavProps {
   subdomain: string;
@@ -37,8 +39,8 @@ export default function SubdomainNav({
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
+      <Drawer.Navigator>
+        <Drawer.Screen 
             name={currentBlog.name}
             component={BlogViewScreen}
             initialParams={{
@@ -49,7 +51,7 @@ export default function SubdomainNav({
               headerTitle: 'Jot.zone',
             }}
           />
-      </Stack.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
