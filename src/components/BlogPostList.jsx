@@ -66,11 +66,11 @@ export default function BlogPostList({
                         </Box>
                     )}
 
-                    { post.medias?.length && (
+                    { post.medias?.length ? (
                         <Box>
                             <MediaGallery medias={post.medias} />
                         </Box>
-                    )}
+                    ) : ''}
                 </Box>
             ))}
         </VStack>

@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import {  getDoc } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 
