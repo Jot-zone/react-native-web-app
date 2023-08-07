@@ -93,7 +93,8 @@ export default function BlogViewScreen({ navigation, route }) {
                     { moreBlogPosts && (
                         <Box>
                             <Button
-                                w="1/5"
+                                w="full"
+                                maxW="48"
                                 colorScheme="secondary"
                                 onPress={ loadMoreBlogPosts }
                             >
