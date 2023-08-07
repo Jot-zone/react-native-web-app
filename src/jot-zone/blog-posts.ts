@@ -36,7 +36,11 @@ export default function useBlogPosts() {
         return docSnap.exists() ? docSnap.data() as BlogPost : null;
     };
 
-    const getBlogPostsBySlug = async (blogSlug: string, limitValue = 10, startAfterDoc = null): Promise<Array<BlogPost>> => {
+    const getBlogPostsBySlug = async (
+        blogSlug: string, 
+        limitValue = 10, 
+        startAfterDoc: BlogPost|null = null
+    ): Promise<Array<BlogPost>> => {
         const postsRef = collection(db, "blogs", blogSlug, "posts");
 
         const q =  startAfterDoc ?
@@ -44,7 +48,7 @@ export default function useBlogPosts() {
                 postsRef, 
                 orderBy("created_at", "desc"), 
                 limit(limitValue), 
-                startAfter(startAfterDoc),
+                startAfter(startAfterDoc.created_at),
             ) :
             query(
                 postsRef, 
