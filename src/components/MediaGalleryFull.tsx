@@ -27,6 +27,8 @@ export default function MediaGalleryFull({
     const [scrollPosition, setScrollPosition] = useState(0);
     const [scrollBottom, setScrollBottom] = useState(0);
 
+    const [showNav, setShowNav] = useState(true);
+
     useEffect(() => {
         setImages(medias.map(media => ({
             original: media.url,
@@ -43,6 +45,14 @@ export default function MediaGalleryFull({
         setScrollBottom(window.pageYOffset + window.innerHeight);
         // setScrollBottom(window.innerHeight);
     }, [isOpen]);
+
+    const onZoomStop = (ref, event) => {
+        if (ref.state.scale === 1) {
+            setShowNav(true);
+        } else {
+            setShowNav(false);
+        }
+    };
 
     return (
         <>
@@ -62,6 +72,14 @@ export default function MediaGalleryFull({
                 .image-gallery-left {
                     display: none !important;
                 }
+
+                // .image-gallery-right-nav {
+                //     right: -88px !important;
+                // }
+
+                // .image-gallery-left-nav {
+                //     left: -88px !important;
+                // }
             `}</style>
 
             <Modal
@@ -81,12 +99,16 @@ export default function MediaGalleryFull({
                     showPlayButton={false}
                     showFullscreenButton={false}
                     showThumbnails={false}
+                    showNav={showNav}
+                    onSlide={() => setShowNav(true)}
+                    // infinite={false}
                     style={{
 
                     }}
                     renderItem={(item) => (
                         <TransformWrapper
                             // limitToBounds={false}
+                            onZoomStop={onZoomStop}
                         >
                             <TransformComponent
                                 wrapperStyle={{

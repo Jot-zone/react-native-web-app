@@ -92,6 +92,10 @@ export default function BlogPostEditor({
                     .ql-container {
                         height: 50vh;
                     }
+
+                    .ql-picker-options {
+                        max-width: fit-content;
+                    }
                 `}
             </style>
 

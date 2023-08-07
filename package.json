@@ -10,7 +10,7 @@
     "eas-android": "eas build --profile development --platform android",
     "eas-ios": "eas build --profile development-simulator --platform ios",
     "postinstall": "patch-package",
-    "deploy-web": "vercel"
+    "deploy-web": "vercel --prod"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
