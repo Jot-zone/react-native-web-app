@@ -6,6 +6,7 @@ import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
 import DeleteConfirmation from "../components/DeleteConfirmation";
 import { MaterialIcons } from '@expo/vector-icons';
+import { SCREEN_BLOG_POST_EDIT } from "../navs/LoggedInNav";
 
 const POST_LIMIT = 5;
 
@@ -97,7 +98,7 @@ export default function BlogEditScreen({ navigation, route }) {
                             maxW="48"
                             size="lg"
                             alignSelf="center"
-                            onPress={ () => navigation.navigate('New Blog Post', {blog: blog.slug}) }
+                            onPress={ () => navigation.navigate(SCREEN_BLOG_POST_EDIT, {blog: blog.slug}) }
                         >
                             <HStack alignItems="center" space="1">
                                 <Icon as={MaterialIcons} name="add" color="white" />
@@ -115,7 +116,7 @@ export default function BlogEditScreen({ navigation, route }) {
                             blogPosts={blogPosts} 
                             handlePostDelete={handlePostDelete} 
                             handleEditPost={ (blogPostId) => navigation.navigate(
-                                'New Blog Post', 
+                                SCREEN_BLOG_POST_EDIT, 
                                 { blog: blog.slug, blogPost: blogPostId }
                             )}
                         />

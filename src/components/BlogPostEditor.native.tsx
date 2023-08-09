@@ -10,6 +10,7 @@ import useStorage from '../jot-zone/storage';
 import MediaManagementToolbar from './MediaManagementToolbar';
 import { Blog } from '../jot-zone/blogs';
 import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
+import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
 
 interface BlogPostEditorProps {
     blog: Blog,
@@ -158,7 +159,7 @@ export default function BlogPostEditor({
                         borderRadius="0"
                         colorScheme="light"
                         /* @ts-ignore */
-                        onPress={ () => navigation.navigate('Blog Edit', {blog: blog.slug}) }
+                        onPress={ () => navigation.navigate(SCREEN_BLOG_EDIT, {blog: blog.slug}) }
                     >
                         Cancel
                     </Button>

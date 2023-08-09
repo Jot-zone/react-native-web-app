@@ -11,6 +11,7 @@ import { getImageMeta } from '../jot-zone/file-helpers';
 import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
 import 'react-quill/dist/quill.snow.css';
 import '../../assets/css/react-quill-custom.css';
+import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
 
 Quill.register('modules/imageCompress', ImageCompress);
 
@@ -130,7 +131,7 @@ export default function BlogPostEditor({
                         <Button
                             colorScheme="light"
                             /* @ts-ignore */
-                            onPress={ () => navigation.navigate('Blog Edit', {blog: blog.slug}) }
+                            onPress={ () => navigation.navigate(SCREEN_BLOG_EDIT, {blog: blog.slug}) }
                             flexGrow={1}
                             // width="1/2"
                             maxW="md"

@@ -4,6 +4,7 @@ import BlogPostEditor from '../components/BlogPostEditor';
 import { Box, Text } from 'native-base';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import useBlogPosts, { BlogPostInput } from '../jot-zone/blog-posts';
+import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
 
 export default function BlogPostEditScreen({ navigation, route }) {
     const isFocused = useIsFocused();
@@ -51,7 +52,7 @@ export default function BlogPostEditScreen({ navigation, route }) {
             await BlogPosts.create(currentBlog.slug, blogPostInput);
         }
 
-        navigation.navigate('Blog Edit');
+        navigation.navigate(SCREEN_BLOG_EDIT);
     }
 
     if (loading || !isFocused ) {

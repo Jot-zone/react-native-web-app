@@ -1,8 +1,6 @@
 import React from 'react';
-import { Box, Text, Input, Button } from 'native-base';
+import { Box, Text, Input, Button, VStack, FormControl } from 'native-base';
 import  MainLayout from '../layouts/MainLayout';
-import BlogList from '../components/BlogList';
-import BlogEdit from './BlogEditScreen';
 import useBlogs from '../jot-zone/blogs';
 
 export default function CreateBlogScreen() {
@@ -12,30 +10,51 @@ export default function CreateBlogScreen() {
     const [blogSlug, setBlogSlug] = React.useState('');
 
     const createBlog = async () => {
-        await Blogs.createBlogForCurrentUser(blogSlug, blogName);
+        if ( ! (blogName && blogSlug)) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        try {
+            await Blogs.createBlogForCurrentUser(blogSlug, blogName);
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
     return (
         <MainLayout>
-            <Box alignSelf="center" w="full" maxW="xl">
+            <VStack alignSelf="center" w="full" maxW="xl" space="5">
                 <Text>
-                    You don't have a blog yet. Create one now!
+                    You don't have a Zone yet. Create one now!
                 </Text>
 
-                <Input
-                    placeholder="Blog Slug"
-                    onChangeText={setBlogSlug}
-                />
+                <FormControl isRequired>
+                    <FormControl.Label>Zone subdomain</FormControl.Label>
 
-                <Input 
-                    placeholder="Blog Name"
-                    onChangeText={setBlogName}
-                />
+                    <Input
+                        placeholder="billy"
+                        onChangeText={setBlogSlug}
+                    />
+
+                    <FormControl.HelperText>
+                        { (blogSlug ? blogSlug : 'billy') + '.jot.zone' }
+                    </FormControl.HelperText>
+                </FormControl>
+
+                <FormControl isRequired>
+                    <FormControl.Label>Zone Name</FormControl.Label>
+
+                    <Input 
+                        placeholder="Billy's Travel Blog"
+                        onChangeText={setBlogName}
+                    />
+                </FormControl>
 
                 <Button onPress={ () => createBlog() }>
                     Create Blog
                 </Button>
-            </Box>
+            </VStack>
         </MainLayout>
     );
   }

@@ -31,11 +31,17 @@ export default function useBlogs() {
     };
 
     const getBlogBySlug = async (blogSlug): Promise<Blog|null> => {
-        const docSnap = await getDoc(doc(db, "blogs", blogSlug));
+        const docSnap = await getDoc(doc(db, "blogs", blogSlug.toLowerCase()));
         return docSnap.exists() ? docSnap.data() as Blog : null;
     };
 
     const createBlogForCurrentUser = async (blogSlug: string, blogName: string): Promise<void> => {
+        blogSlug = blogSlug.toLowerCase();
+
+        if (await getBlogBySlug(blogSlug)) {
+            throw new Error("Blog with that subdomain already exists!");
+        }
+        
         const newBlogRef = doc(db, "blogs", blogSlug);
 
         await setDoc(newBlogRef, {

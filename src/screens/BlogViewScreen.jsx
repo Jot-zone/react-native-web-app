@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Box, Text, Stack, HStack, VStack, Heading, Link, Button } from "native-base";
 import MainLayout from "../layouts/MainLayout";
-import useBlogs from "../jot-zone/blogs";
 import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
+import { SCREEN_BLOG_POST_EDIT } from "../navs/LoggedInNav";
 
 const POST_LIMIT = 5;
 
@@ -84,7 +84,7 @@ export default function BlogViewScreen({ navigation, route }) {
                             blogPosts={blogPosts} 
                             handlePostDelete={handlePostDelete} 
                             handleEditPost={ (blogPostId) => navigation.navigate(
-                                'New Blog Post', 
+                                SCREEN_BLOG_POST_EDIT, 
                                 { blog: blog.slug, blogPost: blogPostId }
                             )}
                         />

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Text } from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import CreateBlogScreen from '../screens/CreateBlogScreen';
@@ -10,6 +9,10 @@ import BlogPostEditScreen from '../screens/BlogPostEditScreen';
 import MenuBar from "../components/MenuBar";
 import useBlogs from "../jot-zone/blogs";
 import { Platform } from 'react-native';
+
+export const SCREEN_BLOG_EDIT = 'Blog Edit';
+export const SCREEN_BLOG_POST_EDIT = 'New Blog Post';
+export const SCREEN_SIGN_IN = 'Sign In';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,8 +41,8 @@ export default function LoggedInNav() {
         ],
         config: {
             screens: {
-                'Blog Edit': {
-                    path: 'blog/:blog',
+                [SCREEN_BLOG_EDIT]: {
+                    path: 'zone/:blog',
                     // parse: {
                     //     blog: async (blog) => await Blogs.getBlogBySlug(blog),
                     // },
@@ -47,13 +50,10 @@ export default function LoggedInNav() {
                     //     blog: (blog) => blog.slug,
                     // }
                 },
-                'New Blog Post': {
-                    path: 'blog/:blog/new-post',
-                    // stringify: {
-                    //     blog: (blog) => blog.slug,
-                    // }
+                [SCREEN_BLOG_POST_EDIT]: {
+                    path: 'zone/:blog/jot-edit',
                 },
-                'Sign In': 'sign-in',
+                [SCREEN_SIGN_IN]: 'sign-in',
             },
         },
     };
@@ -75,7 +75,7 @@ export default function LoggedInNav() {
                     { usersBlogSlugs.length !== 0 ? (
                         <>
                             <Drawer.Screen
-                                name="Blog Edit"
+                                name={SCREEN_BLOG_EDIT}
                                 component={BlogEditScreen}
                                 initialParams={{
                                     blog: usersBlogSlugs[0],
@@ -83,7 +83,7 @@ export default function LoggedInNav() {
                             />
 
                             <Drawer.Screen
-                                name="New Blog Post"
+                                name={SCREEN_BLOG_POST_EDIT}
                                 component={BlogPostEditScreen}
                                 initialParams={{
                                     blog: usersBlogSlugs[0],
@@ -97,7 +97,7 @@ export default function LoggedInNav() {
                     ) : (
                         <>
                             <Drawer.Screen
-                                name="Sign In"
+                                name={SCREEN_SIGN_IN}
                                 component={CreateBlogScreen}
                             />
                         </>
