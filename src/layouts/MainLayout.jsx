@@ -1,14 +1,25 @@
-import { Box, Container, ScrollView } from 'native-base';
-import MenuBar from '../components/MenuBar';
+import { Box, Container, ScrollView, View } from 'native-base';
+import { Platform } from 'react-native';
 
 export default function MainLayout({ children }) {
     return (
         <>
-            <ScrollView backgroundColor="gray.100">
-                <Box safeAreaBottom paddingX="2" paddingTop="5" paddingBottom="12">
+            { Platform.OS === 'web' ? (
+                <Box
+                    backgroundColor="gray.100" paddingX="2" paddingTop="5" paddingBottom="12"
+                    style={{
+                        userSelect: 'text',
+                    }}
+                >
                     {children}
                 </Box>
-            </ScrollView>
+            ) : (
+                <ScrollView backgroundColor="gray.100">
+                    <Box safeAreaBottom paddingX="2" paddingTop="5" paddingBottom="12">
+                        {children}
+                    </Box>
+                </ScrollView>
+            )}
         </>
     )
 }
