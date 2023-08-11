@@ -52,7 +52,7 @@ export default function BlogPostEditScreen({ navigation, route }) {
             await BlogPosts.create(currentBlog.slug, blogPostInput);
         }
 
-        navigation.navigate(SCREEN_BLOG_EDIT);
+        navigation.navigate(SCREEN_BLOG_EDIT, {blog: currentBlog.slug});
     }
 
     if (loading || !isFocused ) {

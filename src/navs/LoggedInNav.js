@@ -81,34 +81,37 @@ export default function LoggedInNav() {
                         },
                     }}
                 >
-                    <>
-                        <Drawer.Screen
-                            name={SCREEN_BLOG_EDIT}
-                            component={BlogEditScreen}
-                            initialParams={{
-                                blog: usersBlogSlugs[0],
-                            }}
-                        />
+                    <Drawer.Screen
+                        name={SCREEN_BLOG_EDIT}
+                        component={BlogEditScreen}
+                        initialParams={{
+                            blog: usersBlogSlugs[0],
+                        }}
+                    />
 
-                        <Drawer.Screen
-                            name={SCREEN_BLOG_POST_EDIT}
-                            component={BlogPostEditScreen}
-                            initialParams={{
-                                blog: usersBlogSlugs[0],
-                                blogPost: null,
-                            }}
-                            options={{
-                                headerShown: Platform.OS === 'web' ? true : false,
-                            }}
-                        />
-                    </>
-                    
-                    <>
-                        <Drawer.Screen
-                            name={SCREEN_CREATE_BLOG}
-                            component={CreateBlogScreen}
-                        />
-                    </>
+                    <Drawer.Screen
+                        name={SCREEN_BLOG_POST_EDIT}
+                        component={BlogPostEditScreen}
+                        initialParams={{
+                            blog: usersBlogSlugs[0],
+                            blogPost: null,
+                        }}
+                        options={{
+                            headerShown: Platform.OS === 'web' ? true : false,
+                        }}
+                        
+                    />
+                
+                    <Drawer.Screen
+                        name={SCREEN_CREATE_BLOG}
+                        component={CreateBlogScreen}
+                        options={{
+                            headerShown: false,
+                            drawerItemStyle: {
+                                display: 'none',
+                            }
+                        }}
+                    />
                 </Drawer.Navigator>
             </NavigationContainer>
         ) }

@@ -6,7 +6,9 @@ export default function MainLayout({ children }) {
         <>
             { Platform.OS === 'web' ? (
                 <Box
-                    backgroundColor="gray.100" paddingX="2" paddingTop="5" paddingBottom="12"
+                    backgroundColor="gray.100" 
+                    minH="80vh"
+                    paddingX="2" paddingTop="5" paddingBottom="12"
                     style={{
                         userSelect: 'text',
                     }}
