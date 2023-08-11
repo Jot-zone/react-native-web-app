@@ -1,4 +1,4 @@
-import {  getDoc } from "firebase/firestore";
+import { getDoc, setDoc } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 
@@ -20,10 +20,20 @@ export default function useUsers() {
         }
     }
 
+    const createDbUser = async (payload) => {
+        await setDoc(dbUserRef, {
+            displayName: firebaseUser.displayName,
+            email: firebaseUser.email,
+            ...payload,
+            uid: firebaseUser.uid,
+        });
+    }
+
     return {
         userInitialized,
         firebaseUser,
         getDbUser,
+        createDbUser,
         dbUserRef,
     }
 }

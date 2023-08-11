@@ -10,9 +10,9 @@ import MenuBar from "../components/MenuBar";
 import useBlogs from "../jot-zone/blogs";
 import { Platform } from 'react-native';
 
-export const SCREEN_BLOG_EDIT = 'Blog Edit';
-export const SCREEN_BLOG_POST_EDIT = 'New Blog Post';
-export const SCREEN_SIGN_IN = 'Sign In';
+export const SCREEN_BLOG_EDIT = 'Zone Dashboard';
+export const SCREEN_BLOG_POST_EDIT = 'New Jot';
+export const SCREEN_CREATE_BLOG = 'Create Zone';
 
 const Drawer = createDrawerNavigator();
 
@@ -50,10 +50,12 @@ export default function LoggedInNav() {
                     //     blog: (blog) => blog.slug,
                     // }
                 },
+
                 [SCREEN_BLOG_POST_EDIT]: {
                     path: 'zone/:blog/jot-edit',
                 },
-                [SCREEN_SIGN_IN]: 'sign-in',
+
+                [SCREEN_CREATE_BLOG]: 'new',
             },
         },
     };
@@ -63,7 +65,14 @@ export default function LoggedInNav() {
         { loading ? (
             <Text>Loading...</Text>
         ) : (
-            <NavigationContainer linking={linking}>
+            <NavigationContainer 
+                linking={linking}
+                initialState={{
+                    routes: [
+                        { name: usersBlogSlugs.length !== 0 ? SCREEN_BLOG_EDIT : SCREEN_CREATE_BLOG },
+                    ],
+                }}
+            >
                 <Drawer.Navigator
                     backBehavior="history"
                     screenOptions={{
@@ -72,36 +81,34 @@ export default function LoggedInNav() {
                         },
                     }}
                 >
-                    { usersBlogSlugs.length !== 0 ? (
-                        <>
-                            <Drawer.Screen
-                                name={SCREEN_BLOG_EDIT}
-                                component={BlogEditScreen}
-                                initialParams={{
-                                    blog: usersBlogSlugs[0],
-                                }}
-                            />
+                    <>
+                        <Drawer.Screen
+                            name={SCREEN_BLOG_EDIT}
+                            component={BlogEditScreen}
+                            initialParams={{
+                                blog: usersBlogSlugs[0],
+                            }}
+                        />
 
-                            <Drawer.Screen
-                                name={SCREEN_BLOG_POST_EDIT}
-                                component={BlogPostEditScreen}
-                                initialParams={{
-                                    blog: usersBlogSlugs[0],
-                                    blogPost: null,
-                                }}
-                                options={{
-                                    headerShown: Platform.OS === 'web' ? true : false,
-                                }}
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <Drawer.Screen
-                                name={SCREEN_SIGN_IN}
-                                component={CreateBlogScreen}
-                            />
-                        </>
-                    ) }
+                        <Drawer.Screen
+                            name={SCREEN_BLOG_POST_EDIT}
+                            component={BlogPostEditScreen}
+                            initialParams={{
+                                blog: usersBlogSlugs[0],
+                                blogPost: null,
+                            }}
+                            options={{
+                                headerShown: Platform.OS === 'web' ? true : false,
+                            }}
+                        />
+                    </>
+                    
+                    <>
+                        <Drawer.Screen
+                            name={SCREEN_CREATE_BLOG}
+                            component={CreateBlogScreen}
+                        />
+                    </>
                 </Drawer.Navigator>
             </NavigationContainer>
         ) }

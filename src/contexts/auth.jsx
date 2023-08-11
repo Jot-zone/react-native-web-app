@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
         setFirebaseUser(firebaseUser);
 
         if (firebaseUser) {
+            console.log({firebaseUser});
             setDbUserRef(doc(db, "users", firebaseUser.uid));
         } else {
             setDbUserRef(null);

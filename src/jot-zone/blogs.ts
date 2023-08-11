@@ -50,8 +50,7 @@ export default function useBlogs() {
             owner: Users.firebaseUser.uid,
         });
 
-        await setDoc(Users.dbUserRef, {
-            uid: Users.firebaseUser.uid,
+        await Users.createDbUser({
             blog_slugs: arrayUnion(blogSlug),
         });
     };

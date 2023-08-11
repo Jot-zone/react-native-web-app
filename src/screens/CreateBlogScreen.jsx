@@ -1,10 +1,13 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Box, Text, Input, Button, VStack, FormControl } from 'native-base';
 import  MainLayout from '../layouts/MainLayout';
 import useBlogs from '../jot-zone/blogs';
+import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
 
 export default function CreateBlogScreen() {
     const Blogs = useBlogs();
+    const navigation = useNavigation();
 
     const [blogName, setBlogName] = React.useState('');
     const [blogSlug, setBlogSlug] = React.useState('');
@@ -17,6 +20,8 @@ export default function CreateBlogScreen() {
 
         try {
             await Blogs.createBlogForCurrentUser(blogSlug, blogName);
+            
+            navigation.navigate(SCREEN_BLOG_EDIT, {blog: blogSlug})
         } catch (error) {
             alert(error.message);
         }
@@ -52,7 +57,7 @@ export default function CreateBlogScreen() {
                 </FormControl>
 
                 <Button onPress={ () => createBlog() }>
-                    Create Blog
+                    Create Zone
                 </Button>
             </VStack>
         </MainLayout>
