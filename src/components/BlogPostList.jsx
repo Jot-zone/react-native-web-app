@@ -1,4 +1,4 @@
-import { Box, Text, VStack, HStack, Button } from "native-base";
+import { Box, Text, VStack, HStack, Button, Pressable } from "native-base";
 import moment from 'moment';
 import BlogPostContent from "./BlogPostContent";
 import MediaGallery from "./MediaGallery";
@@ -6,8 +6,9 @@ import MediaGallery from "./MediaGallery";
 export default function BlogPostList({ 
     editMode = false,
     blogPosts, 
-    handlePostDelete, 
-    handleEditPost 
+    handlePostDelete = () => {}, 
+    handleEditPost = () => {},
+    handlePostClick = () => {},
 }) {
     blogPosts = blogPosts.map(function(post) {
         const createdMoment = moment(post.created_at);
@@ -37,9 +38,16 @@ export default function BlogPostList({
                     <HStack space="1" justifyContent="space-between"
                         marginBottom="5"
                     >
-                        <Text color="gray.700" fontSize="sm">
-                            { post.created_at_string }
-                        </Text>
+                        <Pressable 
+                            onPress={ () => handlePostClick(post.id) }
+                        >
+                            <Text
+                                color="gray.700" 
+                                fontSize="sm"
+                            >
+                                { post.created_at_string }
+                            </Text>
+                        </Pressable>
 
                         { editMode && (
                             <Box>

@@ -3,26 +3,22 @@ import { Box, Text, Stack, HStack, VStack, Heading, Link, Button } from "native-
 import MainLayout from "../layouts/MainLayout";
 import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
-import { SCREEN_BLOG_POST_EDIT } from "../navs/LoggedInNav";
+import { SCREEN_BLOG_POST_VIEW } from "../navs/SubdomainNav";
 
 const POST_LIMIT = 5;
 
-export default function BlogViewScreen({ navigation, route }) {
+export default function BlogViewScreen({ navigation, route, blog }) {
     const BlogPosts = useBlogPosts();
 
-    const [blog, setBlog] = useState(null);
     const [totalBlogPosts, setTotalBlogPosts] = useState(0);
     const [blogPosts, setBlogPosts] = useState([]);
     const [moreBlogPosts, setMoreBlogPosts] = useState(false);
 
     const initialize = async () => {
-        const _blog = route.params.blog;
-        setBlog(_blog);
-
-        const totalBlogPosts = await BlogPosts.getBlogPostCountBySlug(_blog.slug);
+        const totalBlogPosts = await BlogPosts.getBlogPostCountBySlug(blog.slug);
         setTotalBlogPosts(totalBlogPosts);
 
-        const blogPostDocs = await BlogPosts.getBlogPostsBySlug(_blog.slug, POST_LIMIT);
+        const blogPostDocs = await BlogPosts.getBlogPostsBySlug(blog.slug, POST_LIMIT);
         setBlogPosts(blogPostDocs);
 
         setMoreBlogPosts(blogPostDocs.length < totalBlogPosts);
@@ -48,11 +44,6 @@ export default function BlogViewScreen({ navigation, route }) {
 
         setMoreBlogPosts((currentBlogPostCount + moreBlogPosts.length) < totalBlogPosts);
     }
-
-    const handlePostDelete = async (postId) => {
-        await BlogPosts.destroy(blog.slug, postId);
-        initialize();
-    };
 
     // navigation.addListener('focus', () => {
     //     initialize();
@@ -82,10 +73,9 @@ export default function BlogViewScreen({ navigation, route }) {
                         <BlogPostList 
                             editMode={false}
                             blogPosts={blogPosts} 
-                            handlePostDelete={handlePostDelete} 
-                            handleEditPost={ (blogPostId) => navigation.navigate(
-                                SCREEN_BLOG_POST_EDIT, 
-                                { blog: blog.slug, blogPost: blogPostId }
+                            handlePostClick={ (blogPostId) => navigation.navigate(
+                                SCREEN_BLOG_POST_VIEW,
+                                { blogPost: blogPostId }
                             )}
                         />
                     </Box>
