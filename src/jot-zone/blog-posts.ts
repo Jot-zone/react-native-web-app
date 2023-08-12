@@ -122,3 +122,7 @@ function cleanBlogPostContent(content: string): string {
 
     return content;
 }
+
+export function getBlogPostUrl(blogSlug: string, blogPostId: string): string {
+    return `https://${blogSlug}.jot.zone/${blogPostId}`;
+}

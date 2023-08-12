@@ -71,6 +71,7 @@ export default function BlogViewScreen({ navigation, route, blog }) {
 
                     <Box>
                         <BlogPostList 
+                            blog={blog}
                             editMode={false}
                             blogPosts={blogPosts} 
                             handlePostClick={ (blogPostId) => navigation.navigate(

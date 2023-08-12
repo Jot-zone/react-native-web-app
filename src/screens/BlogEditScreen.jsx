@@ -113,6 +113,7 @@ export default function BlogEditScreen({ navigation, route }) {
                     <Box>
                         <BlogPostList 
                             editMode={true}
+                            blog={blog}
                             blogPosts={blogPosts} 
                             handlePostDelete={handlePostDelete} 
                             handleEditPost={ (blogPostId) => navigation.navigate(

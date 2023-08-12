@@ -2,9 +2,12 @@ import { Box, Text, VStack, HStack, Button, Pressable } from "native-base";
 import moment from 'moment';
 import BlogPostContent from "./BlogPostContent";
 import MediaGallery from "./MediaGallery";
+import Clipboard from '@react-native-clipboard/clipboard';
+import { getBlogPostUrl } from "../jot-zone/blog-posts";
 
 export default function BlogPostList({ 
     editMode = false,
+    blog,
     blogPosts, 
     handlePostDelete = () => {}, 
     handleEditPost = () => {},
@@ -52,6 +55,12 @@ export default function BlogPostList({
                         { editMode && (
                             <Box>
                                 <HStack space="2">
+                                    <Button size="xs" colorScheme="primary"
+                                        onPress={ () => Clipboard.setString(getBlogPostUrl(blog.slug, post.id)) }
+                                    >
+                                        Copy Link
+                                    </Button>
+
                                     <Button size="xs" colorScheme="info"
                                         onPress={ () => handleEditPost(post.id)}
                                     >

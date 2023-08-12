@@ -94,6 +94,12 @@ PODS:
     - expo-dev-menu/SafeAreaView
   - ExpoCrypto (12.2.2):
     - ExpoModulesCore
+  - ExpoImage (1.0.1):
+    - ExpoModulesCore
+    - SDWebImage (~> 5.15.0)
+    - SDWebImageAVIFCoder (~> 0.10.0)
+    - SDWebImageSVGCoder (~> 1.6.1)
+    - SDWebImageWebPCoder (~> 0.9.1)
   - ExpoImagePicker (14.1.1):
     - ExpoModulesCore
   - ExpoKeepAwake (12.0.1):
@@ -221,7 +227,28 @@ PODS:
   - hermes-engine (0.71.8):
     - hermes-engine/Pre-built (= 0.71.8)
   - hermes-engine/Pre-built (0.71.8)
+  - libaom (3.0.0):
+    - libvmaf (>= 2.2.0)
+  - libavif (0.11.1):
+    - libavif/libaom (= 0.11.1)
+  - libavif/core (0.11.1)
+  - libavif/libaom (0.11.1):
+    - libaom (>= 2.0.0)
+    - libavif/core
   - libevent (2.1.12)
+  - libvmaf (2.3.1)
+  - libwebp (1.3.1):
+    - libwebp/demux (= 1.3.1)
+    - libwebp/mux (= 1.3.1)
+    - libwebp/sharpyuv (= 1.3.1)
+    - libwebp/webp (= 1.3.1)
+  - libwebp/demux (1.3.1):
+    - libwebp/webp
+  - libwebp/mux (1.3.1):
+    - libwebp/demux
+  - libwebp/sharpyuv (1.3.1)
+  - libwebp/webp (1.3.1):
+    - libwebp/sharpyuv
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -489,7 +516,7 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-webview (11.26.1):
+  - react-native-webview (11.26.0):
     - React-Core
   - React-perflogger (0.71.8)
   - React-RCTActionSheet (0.71.8):
@@ -579,6 +606,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.17.11):
     - React-Core
+  - RNCClipboard (1.11.2):
+    - React-Core
   - RNFBApp (18.3.0):
     - Firebase/CoreOnly (= 10.12.0)
     - React-Core
@@ -620,6 +649,17 @@ PODS:
     - React-RCTImage
   - RNSVG (13.4.0):
     - React-Core
+  - SDWebImage (5.15.8):
+    - SDWebImage/Core (= 5.15.8)
+  - SDWebImage/Core (5.15.8)
+  - SDWebImageAVIFCoder (0.10.1):
+    - libavif (>= 0.11.0)
+    - SDWebImage (~> 5.10)
+  - SDWebImageSVGCoder (1.6.1):
+    - SDWebImage/Core (~> 5.6)
+  - SDWebImageWebPCoder (0.9.1):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.13)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -639,6 +679,7 @@ DEPENDENCIES:
   - expo-dev-menu (from `../node_modules/expo-dev-menu`)
   - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
+  - ExpoImage (from `../node_modules/expo-image/ios`)
   - ExpoImagePicker (from `../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
@@ -688,6 +729,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -709,9 +751,17 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - GTMSessionFetcher
+    - libaom
+    - libavif
     - libevent
+    - libvmaf
+    - libwebp
     - nanopb
     - PromisesObjC
+    - SDWebImage
+    - SDWebImageAVIFCoder
+    - SDWebImageSVGCoder
+    - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
   boost:
@@ -746,6 +796,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-dev-menu-interface/ios"
   ExpoCrypto:
     :path: "../node_modules/expo-crypto/ios"
+  ExpoImage:
+    :path: "../node_modules/expo-image/ios"
   ExpoImagePicker:
     :path: "../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
@@ -832,6 +884,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -864,6 +918,7 @@ SPEC CHECKSUMS:
   expo-dev-menu: f2ea9233cdd8790c20d559eba7352bbf83662d6a
   expo-dev-menu-interface: 6c82ae323c4b8724dead4763ce3ff24a2108bdb1
   ExpoCrypto: 9105610a09cd6290b900bd82fc5d190e489125a3
+  ExpoImage: 55b537a1f50df2f6fc3c2d82552e6d1df397a73d
   ExpoImagePicker: 270dea232b3a072d981dd564e2cafc63a864edb1
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoModulesCore: 653958063a301098b541ae4dfed1ac0b98db607b
@@ -885,7 +940,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: c63691989bf362ba0505507da00eeb326192e83e
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   hermes-engine: 47986d26692ae75ee7a17ab049caee8864f855de
+  libaom: 144606b1da4b5915a1054383c3a4459ccdb3c661
+  libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  libvmaf: 27f523f1e63c694d14d534cd0fddd2fab0ae8711
+  libwebp: 33dc822fbbf4503668d09f7885bbfedc76c45e96
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -905,7 +964,7 @@ SPEC CHECKSUMS:
   react-native-image-resizer: 00ceb0e05586c7aadf061eea676957a6c2ec60fa
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
-  react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
+  react-native-webview: 994b9f8fbb504d6314dc40d83f94f27c6831b3bf
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215
@@ -921,12 +980,17 @@ SPEC CHECKSUMS:
   ReactCommon: 85c98ab0a509e70bf5ee5d9715cf68dbf495b84c
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
+  RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNFBApp: 147c3274daa84d7410d457510548d5fb3b317e37
   RNFBAuth: 7f10a8eb8b55ec604946d071bdd9a228d80c4486
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNReanimated: cc5e3aa479cb9170bcccf8204291a6950a3be128
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
+  SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
+  SDWebImageAVIFCoder: 8348fef6d0ec69e129c66c9fe4d74fbfbf366112
+  SDWebImageSVGCoder: 6fc109f9c2a82ab44510fff410b88b1a6c271ee8
+  SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 
 PODFILE CHECKSUM: 7efe17cdb1139c78bebb8457745b0fddfb43cd89

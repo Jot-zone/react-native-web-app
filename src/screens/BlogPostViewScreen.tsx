@@ -45,6 +45,7 @@ export default function BlogPostViewScreen({
         <MainLayout>
             <Box alignSelf="center" w="full" maxW="desktop" marginTop="2">
                 <BlogPostList
+                    blog={blog}
                     blogPosts={[currentBlogPost]}
                 />
             </Box>
