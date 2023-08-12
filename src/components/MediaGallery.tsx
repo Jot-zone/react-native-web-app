@@ -16,7 +16,7 @@ export default function MediaGallery({
     const [fullscreenInitialPage, setFullscreenInitialPage] = useState(0);
     
     const onMediaPress = (idx: number) => {
-        console.log('onMediaPress', idx);
+        // console.log('onMediaPress', idx);
         setFullscreenInitialPage(idx);
         setShowFullscreen(true);
     }

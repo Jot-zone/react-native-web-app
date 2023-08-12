@@ -21,13 +21,13 @@ export default function BlogPostEditScreen({ navigation, route }) {
         setLoading(true);
 
         const _currentBlog = await Blogs.getBlogBySlug(route.params.blog);
-        console.log({currentBlog: _currentBlog});
+        // console.log({currentBlog: _currentBlog});
         setCurrentBlog(_currentBlog);
 
         const _currentBlogPost = route.params.blogPost 
             ? await BlogPosts.getBlogPostBySlug(_currentBlog.slug, route.params.blogPost) 
             : null;
-        console.log({currentBlogPosttt: _currentBlogPost});
+        // console.log({currentBlogPosttt: _currentBlogPost});
         setCurrentBlogPost(_currentBlogPost);
 
         setLoading(false);
@@ -41,7 +41,7 @@ export default function BlogPostEditScreen({ navigation, route }) {
 
 
     const onSave = async (blogPostInput: BlogPostInput) => {
-        console.log({currentBlogPost, blogPostInput});
+        // console.log({currentBlogPost, blogPostInput});
         if (currentBlogPost) {
             await BlogPosts.update(
                 currentBlog.slug, 

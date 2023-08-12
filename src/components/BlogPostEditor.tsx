@@ -26,7 +26,7 @@ export default function BlogPostEditor({
     blogPost, 
     onSave: onSaveProp 
 }: BlogPostEditorProps) {
-    console.log({bpEditor: blogPost});
+    // console.log({bpEditor: blogPost});
 
     const Storage = useStorage();
     const navigation = useNavigation();

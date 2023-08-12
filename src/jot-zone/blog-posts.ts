@@ -31,7 +31,7 @@ export default function useBlogPosts() {
     /* -------------------------------------------------------------------------- */
 
     const getBlogPostBySlug = async (blogSlug: string, blogPostId: string): Promise<BlogPost|null> => {
-        console.log({blogSlug, blogPostSlug: blogPostId});
+        // console.log({blogSlug, blogPostSlug: blogPostId});
         const docSnap = await getDoc(doc(db, "blogs", blogSlug, "posts", blogPostId));
         return docSnap.exists() ? docSnap.data() as BlogPost : null;
     };
