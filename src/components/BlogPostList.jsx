@@ -27,7 +27,7 @@ export default function BlogPostList({
     });
 
     return (
-        <VStack space="5" marginTop="5">
+        <VStack space="5">
             {blogPosts.map((post) => (
                 <Box 
                     key={post.id}

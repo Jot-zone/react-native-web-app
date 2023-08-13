@@ -4,8 +4,9 @@ import MainLayout from "../layouts/MainLayout";
 import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
 import { SCREEN_BLOG_POST_VIEW } from "../navs/SubdomainNav";
+import SubscriptionDrawer from "../components/SubscriptionDrawer";
 
-const POST_LIMIT = 5;
+const POST_LIMIT = 10;
 
 export default function BlogViewScreen({ navigation, route, blog }) {
     const BlogPosts = useBlogPosts();
@@ -24,7 +25,6 @@ export default function BlogViewScreen({ navigation, route, blog }) {
         setMoreBlogPosts(blogPostDocs.length < totalBlogPosts);
     };
 
-    
     useEffect(() => {
         navigation.addListener('focus', () => {
             initialize();
@@ -58,7 +58,7 @@ export default function BlogViewScreen({ navigation, route, blog }) {
     return (
         <MainLayout>
             <Box alignSelf="center" w="full" maxW="desktop" marginTop="2">
-                <VStack space="5">
+                <VStack space="5" justifyContent="center">
                     <Heading size="lg" textAlign="center">
                         {blog.name}
                     </Heading>
@@ -68,6 +68,10 @@ export default function BlogViewScreen({ navigation, route, blog }) {
                     >
                         {blog.slug}.jot.zone
                     </Heading>
+
+                    <Box alignSelf="center">
+                        <SubscriptionDrawer blog={blog} />
+                    </Box>
 
                     <Box>
                         <BlogPostList 

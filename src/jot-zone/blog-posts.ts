@@ -115,6 +115,11 @@ export default function useBlogPosts() {
     }
 }
 
+
+/* -------------------------------------------------------------------------- */
+/*                                   Helpers                                  */
+/* -------------------------------------------------------------------------- */
+
 function cleanBlogPostContent(content: string): string {
     if (content === '<p><br></p>') {
         return '';
