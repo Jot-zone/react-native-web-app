@@ -110,7 +110,7 @@ export default function BlogEditScreen({ navigation, route }) {
                         </Button>
                     </Box>
 
-                    <Box>
+                    <Box marginTop="3">
                         <BlogPostList 
                             editMode={true}
                             blog={blog}

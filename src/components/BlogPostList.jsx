@@ -1,9 +1,10 @@
-import { Box, Text, VStack, HStack, Button, Pressable } from "native-base";
+import { Box, Text, VStack, HStack, Button, Pressable, IconButton, Icon } from "native-base";
 import moment from 'moment';
 import BlogPostContent from "./BlogPostContent";
 import MediaGallery from "./MediaGallery";
 import Clipboard from '@react-native-clipboard/clipboard';
 import { getBlogPostUrl } from "../jot-zone/blog-posts";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function BlogPostList({ 
     editMode = false,
@@ -20,7 +21,7 @@ export default function BlogPostList({
         const diff = nowMoment.diff(createdMoment, 'hours');
 
         post.created_at_string = diff > 24
-            ? createdMoment.format('MMMM DD YYYY, h:mm:ss a')
+            ? createdMoment.format('MMM DD YYYY, h:mm a')
             : createdMoment.fromNow();
 
         return post;
@@ -55,23 +56,30 @@ export default function BlogPostList({
                         { editMode && (
                             <Box>
                                 <HStack space="2">
-                                    <Button size="xs" colorScheme="primary"
+                                    <Button size="sm" colorScheme="primary"
                                         onPress={ () => Clipboard.setString(getBlogPostUrl(blog.slug, post.id)) }
+                                        leftIcon={<Icon as={MaterialIcons} name="content-copy" color="white" />}
                                     >
-                                        Copy Link
+                                        Link
                                     </Button>
 
-                                    <Button size="xs" colorScheme="info"
+                                    <IconButton size="sm" colorScheme="info"
                                         onPress={ () => handleEditPost(post.id)}
-                                    >
-                                        Edit
-                                    </Button>
+                                        variant="solid"
+                                        _icon={{
+                                            name: "edit",
+                                            as: MaterialIcons,
+                                        }}
+                                    />
 
-                                    <Button size="xs" colorScheme="danger"
+                                    <IconButton size="sm" colorScheme="danger"
                                         onPress={ () => handlePostDelete(post.id) }
-                                    >
-                                        Delete
-                                    </Button>
+                                        variant="solid"
+                                        _icon={{
+                                            name: "delete",
+                                            as: MaterialIcons,
+                                        }}
+                                    />
                                 </HStack>
                             </Box>
                         )}
