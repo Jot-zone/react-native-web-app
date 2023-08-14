@@ -72,7 +72,7 @@ export default function BlogPostEditor({
             ['blockquote', 'code-block'],
             [{ 'indent': '-1'}, { 'indent': '+1' }],  
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['image'],
+            ['image', 'video'],
         ],
 
         imageCompress: {

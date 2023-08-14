@@ -25,6 +25,11 @@ const POST_STYLES = `
         blockquote p {
             display: inline;
         }
+
+        .ql-video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
     </style>
 `
 
