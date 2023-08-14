@@ -20,8 +20,6 @@ interface SubdomainNavProps {
 }
 
 function BlogViewStack({ navigation, route, blog }) {
-  
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -58,7 +56,9 @@ function BlogViewStack({ navigation, route, blog }) {
           blogPost: route.params.blogPost,
         }}
         options={{
-          // title: Date.parse(route.params.blogPost).toString(),
+          headerTitle: blog.name,
+          title: blog.name + ' | Jot.zone',
+
           headerLeft: () => (
             <HeaderBackButton
               onPress={() => navigation.navigate(SCREEN_BLOG_VIEW)}
