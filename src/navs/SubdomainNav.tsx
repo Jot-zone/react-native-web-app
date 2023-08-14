@@ -83,14 +83,26 @@ export default function SubdomainNav({
 }: SubdomainNavProps) {
   const Blogs = useBlogs();
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [currentBlog, setCurrentBlog] = useState<Blog|null>(null);
 
   useEffect(() => {
     (async () => {
       const _blog = await Blogs.getBlogBySlug(subdomain);
       setCurrentBlog(_blog);
+      setLoading(false);
     })();
   }, [subdomain]);
+
+  if (loading) {
+    return (
+      <Box safeArea p="5">
+        <Text>
+          Loading...
+        </Text>
+      </Box>
+    );
+  }
 
   if (!currentBlog) {
     return (
@@ -99,7 +111,7 @@ export default function SubdomainNav({
           Jot Zone for '{subdomain}' not found.
         </Text>
       </Box>
-    )
+    );
   }
 
   const linking = {
