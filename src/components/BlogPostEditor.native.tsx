@@ -47,7 +47,7 @@ export default function BlogPostEditor({
         }
 
         let result = await ImagePicker.launchImageLibraryAsync({
-            quality: 1, // 0-1
+            quality: .8, // 0-1 (i think)
             allowsMultipleSelection: true,
             selectionLimit: 10,
             mediaTypes: ImagePicker.MediaTypeOptions.Images,

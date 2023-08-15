@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, Text, VStack, Heading, Button, AlertDialog, Icon, HStack } from "native-base";
+import { Box, Link, Text, VStack, Heading, Button, AlertDialog, Icon, HStack } from "native-base";
 import MainLayout from "../layouts/MainLayout";
 import useBlogs from "../jot-zone/blogs";
 import BlogPostList from "../components/BlogPostList";
@@ -86,9 +86,21 @@ export default function BlogEditScreen({ navigation, route }) {
                         {blog.name}
                     </Heading>
 
-                    <Heading size="xs" textAlign="center">
-                        {blog.slug}.jot.zone
-                    </Heading>
+                    <Text textAlign="center">
+                        <Link
+                            href={`https://${blog.slug}.jot.zone`}
+                            target="_blank"
+                            isExternal={true}
+                            _text={{
+                                fontSize: "md",
+                                fontWeight: "bold",
+                                color: "blue.700",
+                                textDecoration: "none",
+                            }}
+                        >
+                            {blog.slug}.jot.zone
+                        </Link>
+                    </Text>
 
                     <Box 
                         // alignItems="center"

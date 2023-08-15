@@ -76,7 +76,7 @@ export default function BlogPostEditor({
         ],
 
         imageCompress: {
-            quality: 1, // 0-1
+            quality: .8, // 0-1
             maxWidth: 1000,
             maxHeight: 1000,
             imageType: 'image/jpeg',
