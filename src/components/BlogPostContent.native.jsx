@@ -16,7 +16,8 @@ const BlogPostContent = ({ blogPostContent }) => {
                         maxWidth: imgMaxWidth
                     },
                     p: {
-                        margin: 0
+                        margin: 0,
+                        lineHeight: 1.3 // untested
                     }
                 }}
             />
