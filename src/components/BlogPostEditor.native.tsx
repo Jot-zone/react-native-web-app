@@ -36,6 +36,8 @@ export default function BlogPostEditor({
     const [addingMedia, setAddingMedia] = useState(false);
 
     const addMediaHandler = async () => {
+        // todo: handle gifs
+
         if (!cameraPermissionStatus.granted) {
             const result = await requestPermission();
             console.log({result});

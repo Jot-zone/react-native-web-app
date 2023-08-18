@@ -38,8 +38,13 @@ export default function BlogPostEditor({
     const [addingMedia, setAddingMedia] = useState(false);
 
     const onImageInsert = async (imageBase64URL, imageBlob, editor) => {    
+        console.log({imageBlob});
         setAddingMedia(true);
-        const url = await Storage.uploadBlogImage(imageBlob, blog.slug, 'jpg');
+
+        const extension = imageBlob.type.split('/')[1];
+        console.log({extension});
+
+        const url = await Storage.uploadBlogImage(imageBlob, blog.slug, extension);
 
         const imageMeta = await getImageMeta(url);
 
@@ -83,6 +88,7 @@ export default function BlogPostEditor({
             debug: true,
             suppressErrorLogging: false,
             insertIntoEditor: onImageInsert,
+            ignoreImageTypes: ['image/gif'],
         }
     }), []);
 
