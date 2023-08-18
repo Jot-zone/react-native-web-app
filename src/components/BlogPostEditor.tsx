@@ -38,11 +38,9 @@ export default function BlogPostEditor({
     const [addingMedia, setAddingMedia] = useState(false);
 
     const onImageInsert = async (imageBase64URL, imageBlob, editor) => {    
-        console.log({imageBlob});
         setAddingMedia(true);
 
         const extension = imageBlob.type.split('/')[1];
-        console.log({extension});
 
         const url = await Storage.uploadBlogImage(imageBlob, blog.slug, extension);
 
@@ -55,7 +53,7 @@ export default function BlogPostEditor({
             height: imageMeta.height,
         };
 
-        setMedias(medias => [media, ...medias]);
+        setMedias(medias => [...medias, media]);
         setAddingMedia(false);
     }
 

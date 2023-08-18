@@ -93,7 +93,7 @@ export default function BlogPostEditor({
                     height: resizedImage.height,
                 };
 
-                setMedias(medias => [media, ...medias]);
+                setMedias(medias => [...medias, media]);
             });
         }
   
