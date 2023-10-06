@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Box, Text, Input, Button, VStack, FormControl } from 'native-base';
 import  MainLayout from '../layouts/MainLayout';
 import useBlogs from '../jot-zone/blogs';
-import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
+import { SCREEN_BLOG_EDIT } from '../nav/nav-constants';
 
 export default function CreateBlogScreen() {
     const Blogs = useBlogs();

@@ -1,5 +1,5 @@
 import React, { RefObject, useMemo, useState } from 'react';
-import {  StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Button, HStack, VStack } from "native-base";
 import ReactQuill, { Quill } from 'react-quill';
@@ -11,7 +11,7 @@ import { getImageMeta } from '../jot-zone/file-helpers';
 import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
 import 'react-quill/dist/quill.snow.css';
 import '../../assets/css/react-quill-custom.css';
-import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
+import { SCREEN_BLOG_EDIT } from '../nav/nav-constants';
 
 Quill.register('modules/imageCompress', ImageCompress);
 

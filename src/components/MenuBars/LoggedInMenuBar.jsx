@@ -1,8 +1,8 @@
 import { Box, HStack, IconButton, Icon, Text, Menu, Pressable, HamburgerIcon, Button, Avatar } from "native-base";
 import { useContext } from "react";
-import { AuthContext } from "../contexts/auth";
+import { AuthContext } from "../../contexts/auth";
 
-export default function MenuBar({ navigation }) {
+export default function LoggedInMenuBar({ navigation }) {
     const { firebaseUser, logOut } = useContext(AuthContext);
 
     return (

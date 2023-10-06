@@ -3,16 +3,13 @@ import { Text } from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import CreateBlogScreen from '../screens/CreateBlogScreen';
-import BlogEditScreen from "../screens/BlogEditScreen";
-import BlogPostEditScreen from '../screens/BlogPostEditScreen';
-import MenuBar from "../components/MenuBar";
-import useBlogs from "../jot-zone/blogs";
+import CreateBlogScreen from '../../screens/CreateBlogScreen';
+import BlogEditScreen from "../../screens/BlogEditScreen";
+import BlogPostEditScreen from '../../screens/BlogPostEditScreen';
+import LoggedInMenuBar from "../../components/MenuBars/LoggedInMenuBar";
+import useBlogs from "../../jot-zone/blogs";
 import { Platform } from 'react-native';
-
-export const SCREEN_BLOG_EDIT = 'Zone Dashboard';
-export const SCREEN_BLOG_POST_EDIT = 'New Jot';
-export const SCREEN_CREATE_BLOG = 'Create Zone';
+import { SCREEN_BLOG_EDIT, SCREEN_BLOG_POST_EDIT, SCREEN_CREATE_BLOG } from '../nav-constants';
 
 const Drawer = createDrawerNavigator();
 
@@ -77,7 +74,7 @@ export default function LoggedInNav() {
                     backBehavior="history"
                     screenOptions={{
                         header: ({ navigation, route, options }) => {
-                            return <MenuBar navigation={navigation} />
+                            return <LoggedInMenuBar navigation={navigation} />
                         },
                     }}
                 >

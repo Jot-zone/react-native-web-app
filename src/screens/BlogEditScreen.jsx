@@ -6,7 +6,7 @@ import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
 import DeleteConfirmation from "../components/DeleteConfirmation";
 import { MaterialIcons } from '@expo/vector-icons';
-import { SCREEN_BLOG_POST_EDIT } from "../navs/LoggedInNav";
+import { SCREEN_BLOG_POST_EDIT } from '../nav/nav-constants';
 
 const POST_LIMIT = 5;
 

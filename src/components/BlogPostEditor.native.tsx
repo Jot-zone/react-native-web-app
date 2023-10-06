@@ -10,7 +10,7 @@ import useStorage from '../jot-zone/storage';
 import MediaManagementToolbar from './MediaManagementToolbar';
 import { Blog } from '../jot-zone/blogs';
 import { BlogPost, BlogPostInput, BlogPostMedia, BlogPostMediaType } from '../jot-zone/blog-posts';
-import { SCREEN_BLOG_EDIT } from '../navs/LoggedInNav';
+import { SCREEN_BLOG_EDIT } from '../nav/nav-constants';
 
 interface BlogPostEditorProps {
     blog: Blog,
@@ -47,20 +47,19 @@ export default function BlogPostEditor({
                 return;
             }
         }
-
+        
         let result = await ImagePicker.launchImageLibraryAsync({
             quality: .8, // 0-1 (i think)
             allowsMultipleSelection: true,
             selectionLimit: 10,
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
         });
-
-        // console.log({result});
         
         setAddingMedia(true);
+        // console.log({result});
 
         if (!result.canceled) {
-            result.assets.forEach(async (asset: ImagePicker.ImagePickerAsset) => {
+            result.assets.forEach(await (async (asset: ImagePicker.ImagePickerAsset) => {
                 const imageUri = asset.uri;
 
                 const resizedImage = await ImageResizer.createResizedImage(
@@ -94,7 +93,7 @@ export default function BlogPostEditor({
                 };
 
                 setMedias(medias => [...medias, media]);
-            });
+            }));
         }
   
         setAddingMedia(false);

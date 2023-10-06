@@ -24,10 +24,6 @@ export default function SignInScreen() {
                     Sign in with Google
                 </Button>
             </Box>
-
-            <Text marginTop="2">
-                to get started.
-            </Text>
         </Box>
     </MainLayout>
 }

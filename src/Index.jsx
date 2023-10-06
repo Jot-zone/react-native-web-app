@@ -4,14 +4,17 @@ import { Box, NativeBaseProvider, Text, View } from "native-base";
 import { AuthProvider } from "./contexts/auth";
 import useUsers from './jot-zone/users';
 
-import LoggedOutNav from './navs/LoggedOutNav';
-import LoggedInNav from './navs/LoggedInNav';
-import { Platform } from 'react-native';
-import SubdomainNav from './navs/SubdomainNav';
+import LoggedOutNav from './nav/components/LoggedOutNav';
+import LoggedInNav from './nav/components/LoggedInNav';
+import { Platform, SafeAreaView } from 'react-native';
+import SubdomainNav from './nav/components/SubdomainNav';
+import PrivacyPolicyScreen from './screens/PrivacyPolicyScreen';
+import HomeScreen from './screens/HomeScreen';
+import PagesNav from './nav/components/PagesNav';
 
 const APP_REDIRECT_SUBDOMAINS = [
-  'www',
-  'jot',
+  // 'www',
+  // 'jot',
   'localhost',
 ];
 
@@ -22,6 +25,10 @@ export default function App() {
     ? window.location.hostname.split('.')[0]
     : null;
 
+  const path = Platform.OS === 'web'
+    ? window.location.pathname
+    : null;
+
   // Redirect to app subdomain.
   if (APP_REDIRECT_SUBDOMAINS.includes(subdomain)) {
     return window.location.replace(
@@ -30,6 +37,39 @@ export default function App() {
     ); 
   }
 
+  if (subdomain === 'www') {
+    // redirect to root
+    return window.location.replace(
+      window.location.toString().replace('www.', ''),
+    );
+  }
+
+  // Page routes.
+  if (subdomain === 'jot') {
+    return (
+      <PagesNav />
+    )
+
+    // if (path === '/') {
+    //   return (
+    //     <HomeScreen />
+    //   );
+    // }
+
+    // if (path === '/privacy-policy') {
+    //   return (
+    //     <PrivacyPolicyScreen />
+    //   );
+    // }
+
+    // return (
+    //   <SafeAreaView>
+    //     <Text margin={3}>
+    //       Not found.
+    //     </Text>
+    //   </SafeAreaView>
+    // )
+  }
 
   // Route for a subdomain.
   if (subdomain && subdomain !== 'app') {

@@ -52,6 +52,7 @@ export default function MediaManagementToolbar({
                         >
                             { addingMedia && (
                                 <Box>
+                                    {/* <Text>Loading</Text> */}
                                     <Image
                                         source={loadingGif}
                                         size="sm"

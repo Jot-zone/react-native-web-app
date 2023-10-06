@@ -3,7 +3,7 @@ import { Box, Text, Stack, HStack, VStack, Heading, Link, Button } from "native-
 import MainLayout from "../layouts/MainLayout";
 import BlogPostList from "../components/BlogPostList";
 import useBlogPosts from "../jot-zone/blog-posts";
-import { SCREEN_BLOG_POST_VIEW } from "../navs/SubdomainNav";
+import { SCREEN_BLOG_POST_VIEW } from "../nav/nav-constants";
 import SubscriptionDrawer from "../components/SubscriptionDrawer";
 
 const POST_LIMIT = 10;
