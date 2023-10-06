@@ -21,7 +21,7 @@ export default function PagesNav() {
           name="Jot.zone" 
           component={HomeScreen} 
           options={{
-            headerShown: true,
+            headerShown: false,
           }}
         />
 

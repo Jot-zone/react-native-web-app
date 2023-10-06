@@ -6,18 +6,22 @@ export default function HomeScreen() {
     return (
         <MainLayout>
             <Box margin={3} textAlign="center">
-                <VStack space={5}>
+                <VStack space={2}>
                     <Heading fontSize="5xl">Jot.zone</Heading>
 
-                    <Text fontSize="xl">
+                    <Text marginTop="5" fontSize="xl">
                         Your own place (<Text color="secondary.700" fontStyle="italic">zone</Text>) for simple blog posts (<Text color="secondary.700" fontStyle="italic">jots</Text>).
                     </Text>
 
-                    <Button width="sm" maxWidth="full" margin="auto" onPress={goToAppDashboard}>
-                        Get Started
+                    <Button marginTop="5" width="sm" maxWidth="full" margin="auto" onPress={goToAppDashboard}>
+                        Get Started on Web
                     </Button>
 
-                    <Heading marginTop="8" marginBottom="0">
+                    <Text>
+                        <Link href="mailto:tim.cieplowski+jot.zone@gmail.com">Email</Link> to request beta access to Android or iOS apps.
+                    </Text>
+
+                    <Heading marginTop="8" marginBottom="3">
                         Features
                     </Heading>
 
@@ -33,8 +37,12 @@ export default function HomeScreen() {
                     />
 
                     <Button marginTop="8" width="sm" maxWidth="full" margin="auto" onPress={goToAppDashboard}>
-                        Get Started
+                        Get Started on Web
                     </Button>
+
+                    <Text>
+                        <Link href="mailto:tim.cieplowski+jot.zone@gmail.com">Email</Link> to request beta access to Android or iOS apps.
+                    </Text>
                 </VStack>
             </Box>
         </MainLayout>
