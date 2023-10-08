@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
 import { Box, NativeBaseProvider, Text, View } from "native-base";
-import { AuthProvider } from "./contexts/auth";
 import useUsers from './jot-zone/users';
 
 import LoggedOutNav from './nav/components/LoggedOutNav';
@@ -9,7 +8,6 @@ import LoggedInNav from './nav/components/LoggedInNav';
 import { Platform, SafeAreaView } from 'react-native';
 import SubdomainNav from './nav/components/SubdomainNav';
 import PrivacyPolicyScreen from './screens/PrivacyPolicyScreen';
-import HomeScreen from './screens/HomeScreen';
 import PagesNav from './nav/components/PagesNav';
 
 const APP_REDIRECT_SUBDOMAINS = [
@@ -49,26 +47,6 @@ export default function App() {
     return (
       <PagesNav />
     )
-
-    // if (path === '/') {
-    //   return (
-    //     <HomeScreen />
-    //   );
-    // }
-
-    // if (path === '/privacy-policy') {
-    //   return (
-    //     <PrivacyPolicyScreen />
-    //   );
-    // }
-
-    // return (
-    //   <SafeAreaView>
-    //     <Text margin={3}>
-    //       Not found.
-    //     </Text>
-    //   </SafeAreaView>
-    // )
   }
 
   // Route for a subdomain.

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Box, Text } from 'native-base';
+import { Box, Button, Text } from 'native-base';
 import useBlogs, { Blog } from '../../jot-zone/blogs';
 import BlogViewScreen from '../../screens/BlogViewScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { HeaderBackButton } from '@react-navigation/elements';
 import BlogPostViewScreen from '../../screens/BlogPostViewScreen';
-import { SCREEN_BLOG_VIEW, SCREEN_BLOG_POST_VIEW, SCREEN_SUBDOMAIN_NAV } from '../nav-constants';
+import { SCREEN_BLOG_VIEW, SCREEN_BLOG_POST_VIEW, SCREEN_SUBDOMAIN_NAV, SCREEN_BLOG_EDIT } from '../nav-constants';
+import { goToAppDashboard } from '../../jot-zone/navigation-helpers';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -32,6 +33,19 @@ function BlogViewStack({ navigation, route, blog }) {
           // no back button
           headerLeft: () => (
             <></>
+          ),
+
+          headerRight: () => (
+            <Button
+              onPress={ () => goToAppDashboard() }
+              marginRight={3}
+              colorScheme="secondary"
+              size="xs"
+            >
+              <Text>
+                Create your own zone!
+              </Text>
+            </Button>
           ),
         }}
         // initialParams={{
